@@ -6,9 +6,9 @@
 			<checksum>https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml.md5</checksum>
 			<datadir zip="true">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/</datadir>
 		</dir>
-		<info compressed="false">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml</info>
-		<checksum>https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml.md5</checksum>
-		<datadir zip="true">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/</datadir>
+		<info compressed="false">https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/addons.xml</info>
+		<checksum>https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/addons.xml.md5</checksum>
+		<datadir zip="true">https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">A Brand new Kodi Repository</summary>
