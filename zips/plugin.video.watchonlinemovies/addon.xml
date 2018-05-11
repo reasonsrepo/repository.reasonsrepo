@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addon id="plugin.video.watchonlinemovies"
+version="0.1.0"
+name="WatchOnlineMovies"
+provider-name="Reasons">
+<requires>
+  <import addon="xbmc.python" version="2.24.0"/>
+  <import addon="script.module.requests" version="2.4.3"/>
+  <import addon="script.module.beautifulsoup" version="3.2.1"/>
+  <import addon="script.module.urlresolver" version="3.0.0"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="main.py">
+  <provides>video</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+  <summary>WatchOnlineMovies</summary>
+  <description>WatchOnlineMovies is a popular site to watch Hindi Movies for free</description>
+  <disclaimer>This addon searches watchonlinemovies.com.pk to find movie link. The addon itself doesn't host any content.</disclaimer>
+	<news>[B]Version 0.1.0 - 11th May 2018[/B] - Initial Release</news>
+	<assets>
+		<icon>icon.png</icon>
+		<fanart>fanart.jpg</fanart>
+		<screenshot>resources/images/screenshot-01.jpg</screenshot>
+		<screenshot>resources/images/screenshot-02.jpg</screenshot>
+		<screenshot>resources/images/screenshot-03.jpg</screenshot>
+	</assets>
+  </extension>
+</addon>
