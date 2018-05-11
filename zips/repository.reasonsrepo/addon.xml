@@ -2,13 +2,13 @@
 <addon id="repository.reasonsrepo" name="Reasons Repository" version="0.0.1" provider-name="Reasons Repo">
 	<extension point="xbmc.addon.repository" name="Reasons Repository">
 		<dir>
-			<info compressed="false">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml</info>
-			<checksum>https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/addons.xml.md5</checksum>
-			<datadir zip="true">https://raw.githubusercontent.com/noobsandnerds/modules4all/master/zips/</datadir>
+			<info compressed="false">https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml</info>
+			<checksum>https://raw.githubusercontent.com/jsergio123/zips/master/addons.xml.md5</checksum>
+			<datadir zip="true">https://raw.githubusercontent.com/jsergio123/zips/master/</datadir>
 		</dir>
-		<info compressed="false">https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/addons.xml</info>
-		<checksum>https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/addons.xml.md5</checksum>
-		<datadir zip="true">https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/</datadir>
+		<info compressed="false">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml</info>
+		<checksum>hhttps://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml.md5</checksum>
+		<datadir zip="true">https://raw.github.com/reasonsrepo/repository.reasonsrepo/master/zips</datadir>
 	</extension>
 	<extension point="xbmc.addon.metadata">
 		<summary lang="en">A Brand new Kodi Repository</summary>
