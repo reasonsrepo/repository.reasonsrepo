@@ -8,6 +8,7 @@ provider-name="Reasons">
   <import addon="script.module.requests" version="2.4.3"/>
   <import addon="script.module.beautifulsoup" version="3.2.1"/>
   <import addon="script.module.urlresolver" version="3.0.0"/>
+  <import addon="repository.reasonsrepo" version="1.0.0"/>
 </requires>
 <extension point="xbmc.python.pluginsource" library="main.py">
   <provides>video</provides>
