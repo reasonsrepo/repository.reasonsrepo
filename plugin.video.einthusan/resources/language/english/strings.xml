@@ -1,0 +1,14 @@
+<strings>
+    <string id="3001">Highest Video Quality</string>
+    <string id="3002">Username</string>
+    <string id="3003">Password</string>
+	<string id="3004">Location</string>
+	<string id="3005">San Francisco</string>
+	<string id="3006">Dallas</string>
+	<string id="3007">Washington D.C</string>
+	<string id="3008">Toronto</string>
+	<string id="3009">London</string>
+	<string id="3010">Sydney</string>
+	<string id="3012">No Preference</string>
+	<string id="3011">Select Your Nearest City</string>
+</strings>

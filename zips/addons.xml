@@ -1,5 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
+<addon id="plugin.video.einthusan"
+       name="Einthusan"
+       version="1.4.0"
+       provider-name="humla & Milo">
+    <requires>
+        <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="script.module.requests" version="2.0.0" />
+    </requires>
+    <extension point="xbmc.python.pluginsource"
+               library="default.py">
+        <provides>video</provides>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <platform>all</platform>
+        <summary>Watch Hindi, Tamil  movies</summary>
+        <description>This XBMC plugin allows to watch all movies from Einthusan.tv. Please support them.
+
+        Credits to suriya222 for the thumbnails.</description>
+    </extension>
+</addon>
+
 <addon id="plugin.video.watchonlinemovies"
 version="0.1.1"
 name="WatchOnlineMovies"

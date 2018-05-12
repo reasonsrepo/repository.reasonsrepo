@@ -1,0 +1,6 @@
+<settings>
+   <setting id="username" type="text" label="3002" default="" />
+   <setting id="password" type="text" option="hidden" label="3003" enable="!eq(-1,)" default="" />
+   <setting label="3011" type="lsep"/>
+   <setting id="location" type="select" label="3004" lvalues="3005|3006|3007|3008|3009|3010|3012" default="3012"/>
+</settings>
