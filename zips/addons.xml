@@ -28,8 +28,8 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="repository.reasonsrepo" name="[COLOR pink]Reasons[/COLOR] Repo" version="1.0.0" provider-name="reasons">
-    <extension point="xbmc.addon.repository" name="[COLOR pink]Reasons Repository[/COLOR]">
+<addon id="repository.reasonsrepo" name="[COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR]" version="1.0.0" provider-name="reasons">
+    <extension point="xbmc.addon.repository" name="[COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR]">
     <dir>
         <info compressed="false">https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/addons.xml</info>
         <checksum>https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/addons.xml.md5</checksum>
@@ -40,8 +40,8 @@ provider-name="Reasons">
         <datadir zip="true">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/tree/master/zips</datadir>
     </extension>
     <extension point="xbmc.addon.metadata">
-        <summary>Unofficial Addons for Kodi</summary>
-        <description>Would you care for some salt with that fork?</description>
+        <summary>Official Reasons Repository</summary>
+        <description>All new kodi addons</description>
         <platform>all</platform>
     </extension>
 </addon>
