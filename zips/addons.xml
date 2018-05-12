@@ -58,7 +58,7 @@ provider-name="Reasons">
     </dir>
         <info compressed="false">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml</info>
         <checksum>https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml.md5</checksum>
-        <datadir zip="true">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/tree/master/zips</datadir>
+        <datadir zip="true">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips</datadir>
     </extension>
     <extension point="xbmc.addon.metadata">
         <summary>Official Reasons Repository</summary>
