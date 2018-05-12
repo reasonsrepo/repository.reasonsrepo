@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<addons>
+<addon id="plugin.video.watchonlinemovies"
+version="0.1.1"
+name="WatchOnlineMovies"
+provider-name="Reasons">
+<requires>
+  <import addon="xbmc.python" version="2.24.0"/>
+  <import addon="script.module.requests" version="2.4.3"/>
+  <import addon="script.module.beautifulsoup" version="3.2.1"/>
+  <import addon="script.module.urlresolver" version="3.0.0"/>
+</requires>
+<extension point="xbmc.python.pluginsource" library="main.py">
+  <provides>video</provides>
+</extension>
+<extension point="xbmc.addon.metadata">
+  <summary>WatchOnlineMovies</summary>
+  <description>WatchOnlineMovies is a popular site to watch Hindi Movies for free</description>
+  <disclaimer>This addon searches watchonlinemovies.com.pk to find movie link. The addon itself doesn't host any content.</disclaimer>
+	<news>[B]Version 0.1.0 - 11th May 2018[/B] - Initial Release</news>
+	<assets>
+		<icon>icon.png</icon>
+		<fanart>fanart.jpg</fanart>
+		<screenshot>resources/images/screenshot-01.jpg</screenshot>
+		<screenshot>resources/images/screenshot-02.jpg</screenshot>
+		<screenshot>resources/images/screenshot-03.jpg</screenshot>
+	</assets>
+  </extension>
+</addon>
+
+<addon id="repository.reasonsrepo" name="[COLOR pink]Reasons[/COLOR] Repo" version="1.0.0" provider-name="reasons">
+    <extension point="xbmc.addon.repository" name="[COLOR pink]Reasons Repository[/COLOR]">
+    <dir>
+        <info compressed="false">https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/addons.xml</info>
+        <checksum>https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/addons.xml.md5</checksum>
+        <datadir zip="true">https://github.com/tvaddonsco/tva-resolvers-repo/raw/master/zips/</datadir>
+    </dir>
+        <info compressed="false">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml</info>
+        <checksum>https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/master/zips/addons.xml.md5</checksum>
+        <datadir zip="true">https://raw.githubusercontent.com/reasonsrepo/repository.reasonsrepo/tree/master/zips</datadir>
+    </extension>
+    <extension point="xbmc.addon.metadata">
+        <summary>Unofficial Addons for Kodi</summary>
+        <description>Would you care for some salt with that fork?</description>
+        <platform>all</platform>
+    </extension>
+</addon>
+</addons>
