@@ -1,6 +1,6 @@
 """
-    WatchOnlineMovies Kodi Addon
-    Copyright (C) 2018 Milo
+    BD MovieZone Kodi Addon
+    Copyright (C) 2018 Reasons
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
