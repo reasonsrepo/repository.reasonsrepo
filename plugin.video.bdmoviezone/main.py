@@ -87,7 +87,7 @@ def get_movies(iurl):
     movies = []
     
     if iurl[-3:] == '?s=':
-        search_text = GetSearchQuery('WatchOnlineMovies')
+        search_text = GetSearchQuery('BD MovieZone')
         search_text = urllib.quote_plus(search_text)
         iurl += search_text
 
