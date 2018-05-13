@@ -2,7 +2,7 @@
 <addon id="plugin.video.einthusan"
        name="Einthusan"
        version="1.4.0"
-       provider-name="humla & Milo">
+       provider-name="humla">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.0.0" />
@@ -17,5 +17,6 @@
         <description>This XBMC plugin allows to watch all movies from Einthusan.tv. Please support them.
 
         Credits to suriya222 for the thumbnails.</description>
+		<news>[B]Version 1.4.0 - 11th May 2018[/B] - Fixed Recent movies list</news>
     </extension>
 </addon>
