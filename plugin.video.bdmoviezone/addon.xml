@@ -14,7 +14,7 @@ provider-name="Reasons">
 </extension>
 <extension point="xbmc.addon.metadata">
   <summary>BD MovieZone</summary>
-  <description>BD MovieZone is a popular site to watch Bengali Movies for free</description>
+  <description>BD MovieZone is a popular site to watch Bengali,Hindi and English Movies for free</description>
   <disclaimer>This addon searches BDMovieZone.com to find movie link. The addon itself doesn't host any content.</disclaimer>
 	<news>[B]Version 0.1.0 - 11th May 2018[/B] - Initial Release</news>
 	<assets>
