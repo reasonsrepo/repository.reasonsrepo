@@ -9,7 +9,10 @@ I am still learning python so my addon might have some bugs.
 
 If you have any suggestions or maybe just wanna say thanks then click on the link below
 <br>
-<a href="mailto:reasonsrepo@gmail.com">Email Me</a>
+Click here to <a href="mailto:reasonsrepo@gmail.com">Email Me</a>
+In text format
+reasonsrepo@gmail.com
+
 
 # How to install Reasons Repository in Kodi?
 <b>Follow these steps below</b>
