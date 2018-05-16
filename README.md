@@ -8,7 +8,8 @@ Right now I have no plans on creating a Tv Show addon, as it requires a lot of t
 I am still learning python so my addon might have some bugs.
 
 If you have any suggestions or maybe just wanna say thanks then click on the link below
-<a href="mailto:reasonsrepo@gmail.com">Email Me</>
+<br>
+<a href="mailto:reasonsrepo@gmail.com">Email Me</a>
 
 # How to install Reasons Repository in Kodi?
 <b>Follow these steps below</b>
