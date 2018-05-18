@@ -70,9 +70,10 @@ def get_categories():
     for cat in cats:
         items[str(sno)+cat[1]] = cat[0]
         sno+=1
-    items[str(sno)+'[COLOR green]2018 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2018-movies-hollywood/'
-    items[str(sno)+'[COLOR green]2017 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
-    items[str(sno)+'[COLOR green]2016 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
+    items[str(sno)+'[COLOR red]2018 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2018-movies-hollywood/'
+    items[str(sno)+'[COLOR red]2017 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies/'
+    items[str(sno)+'[COLOR red]2016 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2016-movies-hollywood-movies/'
+    items[str(sno)+'[COLOR red]2015 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2015-movies-hollywood-movies/'
     items[str(sno)+'[COLOR blue]2015 Hindi Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
     items[str(sno)+'[COLOR blue]2018 Hindi Movies[/COLOR]'] = bu + 'category/indian-movies/2018-full-movies/'
     items[str(sno)+'[COLOR blue]Comedy Movies[/COLOR]'] = bu + 'category/indian-movies/funny-movies/'
