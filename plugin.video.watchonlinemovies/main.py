@@ -1,6 +1,6 @@
 """
     WatchOnlineMovies Kodi Addon
-    Copyright (C) 2018 Milo
+    Copyright (C) 2018 Reasons
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -44,10 +44,6 @@ def GetSearchQuery(sitename):
     return search_text
 
 def get_vidhost(url):
-    """
-    Trim the url to get the video hoster
-    :return vidhost
-    """
     parts = url.split('/')[2].split('.')
     vidhost = '%s.%s'%(parts[len(parts)-2],parts[len(parts)-1])
     return vidhost
@@ -70,11 +66,14 @@ def get_categories():
         bu = r.url
     items = {}
     cats = re.findall('class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item[^4]*?"><a href="((?=.*category).*?)">((?![^a-zA-Z]).*?)<',r.text)
-    # cats = re.findall('class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-[^4]*? href="((?=.*category).*?)">((?![^a-zA-Z]).*?)<',r.text) more ui items
     sno = 1
     for cat in cats:
         items[str(sno)+cat[1]] = cat[0]
         sno+=1
+    items[str(sno)+'[COLOR green]2018 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2018-movies-hollywood/'
+    items[str(sno)+'[COLOR green]2017 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
+    items[str(sno)+'[COLOR green]2016 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
+    items[str(sno)+'[COLOR blue]2015 Hindi Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
     items[str(sno)+'[COLOR blue]2018 Hindi Movies[/COLOR]'] = bu + 'category/indian-movies/2018-full-movies/'
     items[str(sno)+'[COLOR blue]Comedy Movies[/COLOR]'] = bu + 'category/indian-movies/funny-movies/'
     items[str(sno)+'[COLOR blue]Romantic Movies[/COLOR]'] = bu + 'category/romantic-movies/'
@@ -112,8 +111,6 @@ def get_movies(iurl):
     if 'next' in str(Paginator):
         nextli = Paginator.find('a', {'class':re.compile('page larger')})
         purl = nextli.get('href')
-        if 'http' not in purl:
-            purl = self.bu[:-12] + purl
         currpg = Paginator.find('span', {'class':re.compile('current')}).text
         pages = Paginator.findAll('a', {'class':re.compile('^page')})
         lastpg = pages[len(pages)-1].text
@@ -160,13 +157,6 @@ def get_videos(url):
         resolve_media(url,videos)
     except:
         pass    
-    
-    try:
-        sources = json.loads(re.findall('vdf-data-json">(.*?)<',html)[0])
-        url = 'https://www.youtube.com/watch?v=%s'%sources['videos'][0]['youtubeID']
-        resolve_media(url,videos)
-    except:
-        pass
         
     return videos
 
