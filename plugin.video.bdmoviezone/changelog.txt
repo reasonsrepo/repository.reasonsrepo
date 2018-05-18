@@ -1,2 +1,4 @@
+[B]Version 0.1.1 - 17 May 2018[/B]
+- Removed Youtube dependency
 [B]Version 0.1.0 - 10 May 2018[/B]
 - Initial Release

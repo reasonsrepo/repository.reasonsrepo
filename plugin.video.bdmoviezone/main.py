@@ -111,8 +111,6 @@ def get_movies(iurl):
     if 'current' in str(Paginator):
         nextli = Paginator.find('a', {'class':re.compile('page')})
         purl = nextli.get('href')
-        if 'http' not in purl:
-            purl = self.bu[:-12] + purl
         currpg = Paginator.find('span', {'class':re.compile('current')}).text
         pages = Paginator.findAll('a', {'class':re.compile('^page')})
         lastpg = pages[len(pages)-1].text
@@ -159,13 +157,6 @@ def get_videos(url):
         resolve_media(url,videos)
     except:
         pass    
-    
-    try:
-        sources = json.loads(re.findall('vdf-data-json">(.*?)<',html)[0])
-        url = 'https://www.youtube.com/watch?v=%s'%sources['videos'][0]['youtubeID']
-        resolve_media(url,videos)
-    except:
-        pass
         
     return videos
 
