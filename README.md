@@ -50,10 +50,18 @@ reasonsrepo@gmail.com
 # How to install the repository on fire tv/stick
 
 Step 1- Open downloader
+
 Step 2- paste this link
+
 https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/repository.reasonsrepo/repository.reasonsrepo-1.0.0.zip?raw=true
+
 Step 3- download it
+
 Step 4- open Kodi
+
 Step 5- go to addons and then install from zip file
+
+
 Step 6- browse to the downloaded location (external storage -->downloader)
+
 Step 7- Click on the zip file to install the repo
