@@ -16,7 +16,7 @@ provider-name="Reasons">
 <extension point="xbmc.addon.metadata">
   <summary>Watch Series Movies</summary>
   <description>This addon is still under construction, so it has limited functionality</description>
-  <disclaimer>This addon searches ww1.watch-series.co to find movie link. The addon itself doesn't host any content.</disclaimer>
+  <disclaimer>This addon is still under construction, so it has limited functionality.This addon searches ww1.watch-series.co to find movie link. The addon itself doesn't host any content.</disclaimer>
 	<news>[B]Version 0.1.1 - 27 May 2018[/B]- Initial Release</news>
 	<assets>
 		<icon>icon.png</icon>
