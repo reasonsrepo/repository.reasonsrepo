@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addons>
 <addon id="plugin.video.bdmoviezone"
-version="0.1.1"
+version="0.1.2"
 name="BD MovieZone"
 provider-name="Reasons">
 <requires>
@@ -9,6 +9,7 @@ provider-name="Reasons">
   <import addon="script.module.requests" version="2.4.3"/>
   <import addon="script.module.beautifulsoup" version="3.2.1"/>
   <import addon="script.module.urlresolver" version="3.0.0"/>
+  <import addon="repository.reasonsrepo" version="1.0.0"/>
 </requires>
 <extension point="xbmc.python.pluginsource" library="main.py">
   <provides>video</provides>
@@ -17,7 +18,7 @@ provider-name="Reasons">
   <summary>BD MovieZone</summary>
   <description>BD MovieZone is a popular site to watch Bengali,Hindi and English Movies for free</description>
   <disclaimer>This addon searches BDMovieZone.com to find movie link. The addon itself doesn't host any content.</disclaimer>
-	<news>[B]Version 0.1.1 - 17 May 2018[/B]- Removed Youtube dependency</news>
+	<news>[B]Version 0.1.2 - 27 May 2018[/B]- Fixed Menu, Fixed Playback issues, Removed BDMovieZone Links</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>

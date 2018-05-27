@@ -69,8 +69,7 @@ def get_categories():
     if r.url != bu:
         bu = r.url
     items = {}
-    cats = re.findall('<li class="cat-item cat-item-.*?"><a href="(.*?)" >((?![^a-zA-Z]).*?)<',r.text)
-    # cats = re.findall('class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-[^4]*? href="((?=.*category).*?)">((?![^a-zA-Z]).*?)<',r.text) more ui items
+    cats = re.findall('<li class="cat-item cat-item-.*?"><a href="(.*?)" >(.*?) Movies<\/a>',r.text)
     sno = 1
     for cat in cats:
         items[str(sno)+cat[1]] = cat[0]
@@ -126,38 +125,17 @@ def get_videos(url):
     :return: list
     """
     videos = []
-    if 'cinebix.com' in url:
-        resolve_media(url,videos)
-        return videos
-
     html = requests.get(url, headers=mozhdr).text
-    mlink = SoupStrainer('div', {'class':re.compile('container')})
-    videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
-    try:
-        links = videoclass.findAll('iframe')
-        for link in links:
-            url = link.get('src')
-            resolve_media(url,videos)
-    except:
-        pass
-
     mlink = SoupStrainer('div', {'class':'container'})
     videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
     try:
         links = videoclass.findAll('iframe')
         for link in links:
-            if 'http' in str(link):
+            if 'openload' in str(link):
                 url = link.get('src')
                 resolve_media(url,videos)
     except:
         pass
-
-    try:
-        url = videoclass.p.a.get('href')
-        resolve_media(url,videos)
-    except:
-        pass    
-        
     return videos
 
 
