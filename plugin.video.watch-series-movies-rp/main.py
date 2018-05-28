@@ -68,14 +68,10 @@ def get_categories():
     r = requests.get(bu, headers=mozhdr)
     if r.url != bu:
         bu = r.url
-    items = {}
-    cats = re.findall('<li id="menu-item-29" class="menu-item menu-item-type-post_type menu-item-object-page micon-megaphone"><a href="(.*?)">(.*?)<\/a><\/li>',r.text)
-    sno = 1
-    for cat in cats:
-        items[str(sno)+cat[1]] = cat[0]
-        sno+=1
-    items[str(sno)+'Movies'] = bu + 'movies'
-    items[str(sno)+'[COLOR yellow]** Search **[/COLOR]'] = bu + '/search.html?keyword='
+    # dialog = xbmcgui.Dialog()
+    items = {' Movies': bu + 'movies',
+            ' [COLOR yellow]** Search **[/COLOR]': bu + 'search.html' + '?s=',
+            '.[COLOR red]Disclaimer: TV Shows doesnt work yet [/COLOR]': 'book'}
     
     return items
 
@@ -84,12 +80,16 @@ def get_movies(iurl):
     Get the list of movies.
     :return: list
     """
+    
     movies = []
     
-    if iurl[-3:] == 'search.html?keyword=':
+    if iurl[-3:] == '?s=':
+        if iurl.endswith('?s='):
+            iurl = 'https://ww1.watch-series.co/search.html?keyword='
         search_text = GetSearchQuery('Watch-Series')
         search_text = urllib.quote_plus(search_text)
-        iurl += search_text
+        iurl = iurl + search_text
+        
 
     html = requests.get(iurl, headers=mozhdr).text
     mlink = SoupStrainer('li', {'class':re.compile('^video-block')})
@@ -103,25 +103,27 @@ def get_movies(iurl):
         try:
             quality = item.find("div", {"class":"video_likes icon-tag"}).text
         except:
-            quality = "HD"
-        title1 = item.div.div.div.text
+            quality = ""
+        try:
+            title1 = item.h5.text
+        except:
+            title1 = item.div.div.div.text
         title = title1 + '  [COLOR yellow]' + quality + '[/COLOR]'
         url1 = item.div.find('a')['href']
-        url = "https://ww1.watch-series.co/" + url1
-        xbmc.log(url)
+        url = "https://ww1.watch-series.co" + url1
+        if '-episode-0' not in url:
+            url = "https://ww1.watch-series.co" + url1 + '-episode-0'
         try:
             thumb = item.find('img')['src'].strip()
         except:
             thumb = _icon
         movies.append((title, thumb, url))
     
-    if 'current' in str(Paginator):
-        nextli = Paginator.find('a', {'class':re.compile('page')})
-        purl = nextli.get('href')
-        currpg = Paginator.find('span', {'class':re.compile('current')}).text
-        pages = Paginator.findAll('a', {'class':re.compile('^page')})
-        lastpg = pages[len(pages)-1].text
-        title = 'Next Page.. (Currently in Page %s of %s)' % (currpg,lastpg)
+    if 'next' in str(Paginator):
+        nextli = Paginator.find('li', {'class':re.compile('next next page-numbers')})
+        purl1 = nextli.find('a')['href']
+        purl =  'https://ww1.watch-series.co/movies' + purl1
+        title = '[COLOR yellow] Next Page....[/COLOR]'
         movies.append((title, _icon, purl))
    
     return movies
@@ -142,6 +144,16 @@ def get_videos(url):
             if 'http' in str(link):
                 url = link.get('data-video')
                 resolve_media(url,videos)
+    except:
+        pass
+    mlink = SoupStrainer('div', {'class':'play-video'})
+    videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
+    try:
+        links = videoclass.findAll('iframe')
+        for link in links:
+            url1 = link.get('src')
+            url = 'https:' + url1
+            resolve_media(url,videos)
     except:
         pass
     return videos
@@ -238,7 +250,7 @@ def play_video(path):
     # Create a playable item with a path to play.
     play_item = xbmcgui.ListItem(path=path)
     vid_url = play_item.getfilename()
-    if 'WatchOnlineMovies' not in vid_url:
+    if 'Watchseries' not in vid_url:
         stream_url = resolve_url(vid_url)
         if stream_url:
             play_item.setPath(stream_url)
