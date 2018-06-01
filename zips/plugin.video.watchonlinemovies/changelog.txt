@@ -1,4 +1,8 @@
-[B]Version 0.1.0 - 10 May 2018[/B]
+[B]Version 0.1.4 - 01 June 2018[/B]
+- Removed Menus, Fixed Navigation, Removed all the extra information from movie title (Almost worked), Color coded years and languages
+[B]Version 0.1.3 - 17 May 2018[/B]
+- Added more English sections, removed youtube and fixed my mistakes
+[B]Version 0.1.2 - 17 May 2018[/B]
 - Added more English sections and removed youtube
 [B]Version 0.1.0 - 10 May 2018[/B]
 - Initial Release
