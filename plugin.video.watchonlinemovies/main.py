@@ -64,21 +64,11 @@ def get_categories():
     r = requests.get(bu, headers=mozhdr)
     if r.url != bu:
         bu = r.url
-    items = {}
-    cats = re.findall('class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-has-children menu-item[^4]*?"><a href="((?=.*category).*?)">((?![^a-zA-Z]).*?)<',r.text)
-    sno = 1
-    for cat in cats:
-        items[str(sno)+cat[1]] = cat[0]
-        sno+=1
-    items[str(sno)+'[COLOR red]2018 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2018-movies-hollywood/'
-    items[str(sno)+'[COLOR red]2017 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies/'
-    items[str(sno)+'[COLOR red]2016 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2016-movies-hollywood-movies/'
-    items[str(sno)+'[COLOR red]2015 English Movies[/COLOR]'] = bu + 'category/hollywood-movies/2015-movies-hollywood-movies/'
-    items[str(sno)+'[COLOR blue]2015 Hindi Movies[/COLOR]'] = bu + 'category/hollywood-movies/2017-movies-hollywood/'
-    items[str(sno)+'[COLOR blue]2018 Hindi Movies[/COLOR]'] = bu + 'category/indian-movies/2018-full-movies/'
-    items[str(sno)+'[COLOR blue]Comedy Movies[/COLOR]'] = bu + 'category/indian-movies/funny-movies/'
-    items[str(sno)+'[COLOR blue]Romantic Movies[/COLOR]'] = bu + 'category/romantic-movies/'
-    items[str(sno)+'[COLOR yellow]** Search **[/COLOR]'] = bu + '/?s='
+    items = {'ARecently Uploaded Movies': bu,
+            'B2018 Movies': bu + 'category/indian-movies/2018-full-movies/',
+            'C2018 English Movies': bu + 'category/hollywood-movies/2018-movies-hollywood/',
+            'Y[COLOR yellow]** Search **[/COLOR]': bu + '?s=',
+            'Z[COLOR red]Note: This addon is still in development, so please keep it updated [/COLOR]': 'book'}
     
     return items
 
@@ -101,7 +91,124 @@ def get_movies(iurl):
     Paginator = BeautifulSoup(html, parseOnlyThese=plink)
 
     for item in items:
-        title = item.h2.text
+        title1 = item.h2.text
+        try:
+            title2 = title1.replace("Full Movie", "")
+        except:
+            title2 = title1.replace("Watch Online", "")
+        try:
+            title3 = title2.replace("Watch Online Placeholdernt", "")
+        except:
+            title3 = title2.replace(".", "")
+        try:
+            title4 = title3.replace(".", "")
+        except:
+            title4 = title3.replace("Watch Online Placeholder","")
+        try:
+            title5 = title4.replace("Watch Online", "")
+        except:
+            title5 = title4.replace("Download","")
+        try:
+            title6 = title5.replace("Watch Onlin", "")
+        except:
+            title6 = title5.replace("Placeholder","")
+        try:
+            title7 = title6.replace("HD Pri", "")
+        except:
+            title7 = title6.replace("Placeholder","")
+        try:
+            title8 = title7.replace("  Watch On", "")
+        except:
+            title8 = title7.replace("Placeholder","")
+        try:
+            title9 = title8.replace("  Watch", "")
+        except:
+            title9 = title8.replace("Placeholder","")
+        try:
+            title10 = title9.replace("Free Down", "")
+        except:
+            title10 = title9.replace("Placeholder","")
+        try:
+            title11 = title10.replace("Free D", "")
+        except:
+            title11 = title10.replace("Placeholder","")
+        try:
+            title12 = title11.replace("Free", "")
+        except:
+            title12 = title11.replace("Placeholder","")
+        try:
+            title13 = title12.replace("   F", "")
+        except:
+            title13 = title12.replace("Placeholder","")
+        try:
+            title14 = title13.replace("   Fr", "")
+        except:
+            title14 = title13.replace("Placeholder","")
+        try:
+            title15 = title14.replace("   Fre", "")
+        except:
+            title15 = title14.replace("Placeholder","")
+        try:
+            title16 = title15.replace(" HD", "")
+        except:
+            title16 = title15.replace("Placeholder","")
+        try:
+            title17 = title16.replace("    H", "")
+        except:
+            title17 = title16.replace("Placeholder","")
+        try:
+            title18 = title17.replace("    HD P", "")
+        except:
+            title18 = title17.replace("Placeholder","")
+        try:
+            title19 = title18.replace("  re", "")
+        except:
+            title19 = title18.replace("Placeholder","")
+        try:
+            title120 = title19.replace("  r", "")
+        except:
+            title120 = title19.replace("Placeholder","")
+        # Coloring Years
+        try:
+            title21 = title120.replace("(2018)", "[COLOR yellow](2018)[/COLOR]")
+        except:
+            title21 = title120.replace("Placeholder","")
+        try:
+            title22 = title21.replace("(2016)", "[COLOR lightsalmon](2016)[/COLOR]")
+        except:
+            title22 = title21.replace("Placeholder","")
+        try:
+            title23 = title22.replace("(2015)", "[COLOR lime](2016)[/COLOR]")
+        except:
+            title23 = title22.replace("Placeholder","")
+        # Language
+        try:
+            title24 = title23.replace("Hindi", "[COLOR green]Hindi[/COLOR]")
+        except:
+            title24 = title23.replace("Placeholder","")
+        try:
+            title25 = title24.replace("Dubbed", "[COLOR cyan]Dubbed[/COLOR]")
+        except:
+            title25 = title24.replace("Placeholder","")
+
+        # Continued
+        try:
+            title26 = title25.replace("   nt o", "")
+        except:
+            title26 = title25.replace("Placeholder","")
+        try:
+            title27 = title26.replace("   nt F", "")
+        except:
+            title27 = title26.replace("Placeholder","")
+        try:
+            title28 = title27.replace("   nt", "")
+        except:
+            title28 = title27.replace("Placeholder","")
+        try:
+            title = title28.replace("   Pr", "")
+        except:
+            title = title28.replace("Placeholder","")
+
         url = item.h2.find('a')['href']
         try:
             thumb = item.find('img')['src'].strip()
@@ -110,12 +217,13 @@ def get_movies(iurl):
         movies.append((title, thumb, url))
     
     if 'next' in str(Paginator):
+
         nextli = Paginator.find('a', {'class':re.compile('page larger')})
+
         purl = nextli.get('href')
-        currpg = Paginator.find('span', {'class':re.compile('current')}).text
-        pages = Paginator.findAll('a', {'class':re.compile('^page')})
+        pages = Paginator.findAll('span', {'class':re.compile('pages')})
         lastpg = pages[len(pages)-1].text
-        title = 'Next Page.. (Currently in Page %s of %s)' % (currpg,lastpg)
+        title = 'Next Page.. (Currently in %s)' % (lastpg)
         movies.append((title, _icon, purl))
    
     return movies

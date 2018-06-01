@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.watchonlinemovies"
-version="0.1.3"
+version="0.1.4"
 name="WatchOnlineMovies"
 provider-name="Reasons">
 <requires>
@@ -17,7 +17,7 @@ provider-name="Reasons">
   <summary>WatchOnlineMovies</summary>
   <description>WatchOnlineMovies is a popular site to watch Hindi Movies for free</description>
   <disclaimer>This addon searches watchonlinemovies.com.pk to find movie link. The addon itself doesn't host any content.</disclaimer>
-	<news>[B]Version 0.1.3 - 17th May 2018[/B] - Added more English sections and removed youtube</news>
+	<news>[B]Version 0.1.4 - 01 June 2018[/B] - Removed Menus, Fixed Navigation, Removed all the extra information from movie title (Almost worked), Color coded years and languages</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>
