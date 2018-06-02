@@ -69,9 +69,10 @@ def get_categories():
     if r.url != bu:
         bu = r.url
     # dialog = xbmcgui.Dialog()
-    items = {' Movies': bu + 'movies',
-            ' [COLOR yellow]** Search **[/COLOR]': bu + 'search.html' + '?s=',
-            '.[COLOR red]Disclaimer: TV Shows doesnt work yet [/COLOR]': 'book'}
+    items = {'1Latest Episodes': bu,
+            '2Movies': bu + 'movies',
+            '8[COLOR yellow]** Search **[/COLOR]': bu + 'search.html' + '?s=',
+            '9[COLOR red]Disclaimer: TV Shows doesnt work yet [/COLOR]': 'book'}
     
     return items
 
@@ -111,22 +112,24 @@ def get_movies(iurl):
         title = title1 + '  [COLOR yellow]' + quality + '[/COLOR]'
         url1 = item.div.find('a')['href']
         url = "https://ww1.watch-series.co" + url1
-        if '-episode-0' not in url:
+        if '-episode' not in url:
             url = "https://ww1.watch-series.co" + url1 + '-episode-0'
         try:
             thumb = item.find('img')['src'].strip()
         except:
             thumb = _icon
         movies.append((title, thumb, url))
-    
+        xbmc.log(url)
     if 'next' in str(Paginator):
         nextli = Paginator.find('li', {'class':re.compile('next next page-numbers')})
         purl1 = nextli.find('a')['href']
         purl =  'https://ww1.watch-series.co/movies' + purl1
         title = '[COLOR yellow] Next Page....[/COLOR]'
         movies.append((title, _icon, purl))
-   
+        
     return movies
+
+# TV Show Test
 
 
 def get_videos(url):
@@ -147,6 +150,16 @@ def get_videos(url):
     except:
         pass
     mlink = SoupStrainer('div', {'class':'play-video'})
+    videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
+    try:
+        links = videoclass.findAll('iframe')
+        for link in links:
+            url1 = link.get('src')
+            url = 'https:' + url1
+            resolve_media(url,videos)
+    except:
+        pass
+    mlink = SoupStrainer('div', {'class':'load_video'})
     videoclass = BeautifulSoup(html, parseOnlyThese=mlink)
     try:
         links = videoclass.findAll('iframe')
