@@ -23,6 +23,7 @@ from BeautifulSoup import BeautifulSoup, SoupStrainer
 import re, requests, urllib, json
 import jsunpack
 import urlresolver
+from addon.common.addon import Addon
 
 # Get the plugin url in plugin:// notation.
 _url = sys.argv[0]
@@ -31,6 +32,9 @@ _handle = int(sys.argv[1])
 _addon = xbmcaddon.Addon()
 _addonname = _addon.getAddonInfo('name')
 _icon = _addon.getAddonInfo('icon')
+addon_id='plugin.video.watch-series-movies-rp'
+selfAddon = xbmcaddon.Addon(id=addon_id)
+addon = Addon(addon_id, sys.argv)
 _fanart = _addon.getAddonInfo('fanart')
 mozhdr = {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3'}
 
@@ -53,7 +57,6 @@ def get_vidhost(url):
     return vidhost
 
 def resolve_media(url,videos):
-
     vidhost = get_vidhost(url)
     videos.append((vidhost,url))
 
@@ -69,11 +72,18 @@ def get_categories():
     if r.url != bu:
         bu = r.url
     # dialog = xbmcgui.Dialog()
-    items = {'1Latest Episodes': bu,
-            '2Movies': bu + 'movies',
-            '8[COLOR yellow]** Search **[/COLOR]': bu + 'search.html' + '?s=',
-            '9[COLOR red]Disclaimer: TV Shows doesnt work yet [/COLOR]': 'book'}
-    
+    items = {'ATV Shows': bu + '?genre=tv-show&year=all',
+            'APopular TV Shows': bu + 'popular?genre=tv-show&year=all',
+            'CMovies': bu + 'movies',
+            'D[COLOR red]<---- Genres ---->[/COLOR]': bu + 'nolinkgenre',
+            'E[COLOR lime]Action[/COLOR]': bu + 'popular?genre=action&year=all',
+            'F[COLOR lime]Adventure[/COLOR]': bu + 'popular?genre=adventure&year=all',
+            'G[COLOR lime]Animation[/COLOR]': bu + 'popular?genre=animation&year=all',
+            'H[COLOR red]<---- Genres ---->[/COLOR]': bu + 'nolinkgenre',
+            'Y[COLOR yellow]** Search **[/COLOR]': bu + 'search.html' + '?s=',
+            'Z[COLOR white]Disclaimer: Only Episodes works [/COLOR]': bu + 'nolinktest'}
+
+    setView('tvshows', 'default-view')
     return items
 
 def get_movies(iurl):
@@ -83,7 +93,10 @@ def get_movies(iurl):
     """
     
     movies = []
-    
+    if 'nolinktest' in iurl:
+        xbmc.executebuiltin("XBMC.Notification([COLOR red]Disclaimer[/COLOR],[COLOR white]You can only view the episodes and not seasons[/COLOR] ,2000)")
+    if 'nolinkgenre' in iurl:
+        xbmc.executebuiltin("XBMC.Notification([COLOR red]Genre Error[/COLOR],[COLOR white]Please select a genre from the list[/COLOR] ,6000)")
     if iurl[-3:] == '?s=':
         if iurl.endswith('?s='):
             iurl = 'https://ww1.watch-series.co/search.html?keyword='
@@ -126,11 +139,55 @@ def get_movies(iurl):
         purl =  'https://ww1.watch-series.co/movies' + purl1
         title = '[COLOR yellow] Next Page....[/COLOR]'
         movies.append((title, _icon, purl))
-        
+    setView('tvshows', 'List')
     return movies
 
 # TV Show Test
+def get_tvshows(url):
+    """
+    Get the list of tvshows.
+    :return: list
+    """
+    
+    tvshow = []
 
+    html = requests.get(url, headers=mozhdr).text
+    mlink = SoupStrainer('li', {'class':re.compile('^li-.+?')})
+    items = BeautifulSoup(html, parseOnlyThese=mlink)
+    plink = SoupStrainer('div', {'class':'pagination'})
+    Paginator = BeautifulSoup(html, parseOnlyThese=plink)
+
+
+
+    for item in items:
+        try:
+            quality = item.find("div", {"class":"video_likes icon-tag"}).text
+        except:
+            quality = ""
+        try:
+            title1 = item.b.text
+        except:
+            title1 = item.find('div')['title']
+        title = title1 + '  [COLOR yellow]' + quality + '[/COLOR]'
+        url1 = item.div.find('a')['href']
+        url = "https://ww1.watch-series.co" + url1
+        if '-episode-0' not in url:
+            url = "https://ww1.watch-series.co" + url1 
+            xbmc.log(url + " this is a test")
+        try:
+            thumb = item.find('img')['src'].strip()
+        except:
+            thumb = _icon
+        tvshow.append((title, thumb, url))
+        
+    if 'next' in str(Paginator):
+        nextli = Paginator.find('li', {'class':re.compile('next next page-numbers')})
+        purl1 = nextli.find('a')['href']
+        purl =  'https://ww1.watch-series.co/movies' + purl1
+        title = '[COLOR yellow] Next Page....[/COLOR]'
+        tvshow.append((title, _icon, purl))
+    setView('tvshows', 'List')
+    return tvshow
 
 def get_videos(url):
     """
@@ -169,6 +226,7 @@ def get_videos(url):
             resolve_media(url,videos)
     except:
         pass
+    setView('tvshows', 'List')
     return videos
 
 
@@ -210,16 +268,36 @@ def list_movies(category):
         listing.append((url, list_item, is_folder))
     xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
     xbmcplugin.endOfDirectory(_handle)
- 
+
+def list_tvshows(category):
+    """
+    Create the list of movies in the Kodi interface.
+    """
+    tvshows = get_tvshows(category)
+    listing = []
+    for tvshow in tvshows:
+        list_item = xbmcgui.ListItem(label=tvshow[0])
+        list_item.setArt({'thumb': tvshow[1],
+                          'icon': tvshow[1],
+                          'fanart': tvshow[1]})
+        list_item.setInfo('video', {'title': tvshow[0]})
+        if 'Next Page' in tvshow[0]:
+            url = '{0}?action=list_category&category={1}'.format(_url, tvshow[2])
+        else:
+            url = '{0}?action=list_movie&thumb={1}&movie={2}'.format(_url, tvshow[1], tvshow[2])
+        is_folder = True
+        listing.append((url, list_item, is_folder))
+    xbmcplugin.addDirectoryItems(_handle, listing, len(listing))
+    xbmcplugin.endOfDirectory(_handle)
    
-def list_videos(movie,thumb):
+def list_videos(tvshow,thumb):
     """
     Create the list of playable videos in the Kodi interface.
 
     :param category: str
     """
 
-    videos = get_videos(movie)
+    videos = get_videos(tvshow)
     listing = []
     for video in videos:
         list_item = xbmcgui.ListItem(label=video[0])
@@ -271,6 +349,14 @@ def play_video(path):
     xbmcplugin.setResolvedUrl(_handle, True, listitem=play_item)
 
 
+
+def setView(content, viewType):
+	if content:
+		xbmcplugin.setContent(int(sys.argv[1]), content)
+	if addon.get_setting('auto-view') == 'true':
+		xbmc.executebuiltin("Container.SetViewMode(%s)" % addon.get_setting(viewType) )
+
+
 def router(paramstring):
     """
     Router function that calls other functions
@@ -288,6 +374,8 @@ def router(paramstring):
             list_movies(params['category'])
         elif params['action'] == 'list_movie':
             list_videos(params['movie'],params['thumb'])
+        elif params['action'] == 'list_tvshows':
+            list_videos(params['tvshow'],params['thumb'])
         elif params['action'] == 'play':
             play_video(params['video'])
     else:
