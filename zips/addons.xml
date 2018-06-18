@@ -84,7 +84,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.uwatchfree" name="UwatchFree" version="1.0.8" provider-name="Dandymedia & Reasons">
+<addon id="plugin.video.uwatchfree" name="UwatchFree" version="1.0.8" provider-name="Dandymedia, Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
