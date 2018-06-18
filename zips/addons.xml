@@ -99,7 +99,7 @@ provider-name="Reasons">
 	<summary lang="en">Movies and Tv Shows from uwatchfree</summary>
 	<description lang="en">This addon is originally by DandyMedia</description>
 	<disclaimer lang="en">This addon doesn't host any content</disclaimer>
-  <news>[B]Version 1.0.8 - 18 June 2018[/B] - Initial Release on [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR] & Fixed Hollywood, Bollywood and Bengali Movie selection</news>
+  <news>[B]Version 1.0.8 - 18 June 2018[/B] - Initial Release on [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR], Fixed Hollywood, Bollywood and Bengali Movie selection</news>
 	<platform>all</platform>
   </extension>
 </addon>
