@@ -84,6 +84,26 @@ provider-name="Reasons">
   </extension>
 </addon>
 
+<addon id="plugin.video.uwatchfree" name="UwatchFree" version="1.0.8" provider-name="Dandymedia & Reasons">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.urlresolver"  version="3.0.0"/>
+    <import addon="script.module.addon.common" />
+    <import addon="script.module.metahandler" version="2.5.1"/>
+    <import addon="repository.reasonsrepo" version="1.0.0"/>
+  </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+	<summary lang="en">Movies and Tv Shows from uwatchfree</summary>
+	<description lang="en">This addon is originally by DandyMedia</description>
+	<disclaimer lang="en">This addon doesn't host any content</disclaimer>
+  <news>[B]Version 1.0.8 - 18 June 2018[/B] - Initial Release on [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR] & Fixed Hollywood, Bollywood and Bengali Movie selection</news>
+	<platform>all</platform>
+  </extension>
+</addon>
+
 <addon id="plugin.video.watch-series-movies-rp"
 version="0.1.4"
 name="Watch Series Movies"
