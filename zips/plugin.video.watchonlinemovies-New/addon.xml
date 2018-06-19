@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.0" provider-name="Reasons">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.urlresolver"  version="3.0.0"/>
+    <import addon="script.module.addon.common" />
+    <import addon="script.module.metahandler" version="2.5.1"/>
+    <import addon="repository.reasonsrepo" version="1.0.0"/>
+    </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+  <summary>WatchOnlineMovies-New</summary>
+	<description lang="en">This is a brand new addon for watchonlinemovies.com.pk</description>
+	<disclaimer lang="en">This addon doesn't host any content</disclaimer>
+  <news>[B]Version 1.0.0 - 19 June 2018[/B] - Initial Release</news>
+	<platform>all</platform>
+  </extension>
+</addon>
