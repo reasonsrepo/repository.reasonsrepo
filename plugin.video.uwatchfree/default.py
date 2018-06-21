@@ -52,7 +52,10 @@ def Get_content(url):
     np = re.compile('<li><a href="(.+?)">(.+?)</a></li>',re.DOTALL).findall(OPEN)
     for url,name in np:
             if '>>' in name:
-                    addDir('[B][COLOR blue]Next Page>>>[/COLOR][/B]',url,5,ART + 'nextpage.jpg',FANART,'')
+                    allpages = re.compile('<ul><li class="page_info">(.+?)<',re.DOTALL).findall(OPEN)
+                    for pages in allpages:    
+                        addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
+                #     addDir('[B][COLOR blue]Next Page>>>[/COLOR][/B]',url,5,ART + 'nextpage.jpg',FANART,'')
     setView('movies', 'movie-view')
 		
 	
@@ -161,8 +164,21 @@ def resolve(name,url,iconimage,description):
     host = ''
     try:
         OPEN = Open_Url(url)
+        match2 = re.compile('location=.+?embed(.+?)".+?;var',re.DOTALL).findall(OPEN)
         match = re.compile('href="(.+?)"',re.DOTALL).findall(OPEN)
         for link in match:
+            if not 'wholecloud' in link:
+                if not 'vidtodo' in link:
+                    if  urlresolver.HostedMediaFile(link).valid_url():   
+                        label = link.split('//')[1].replace('www.','')
+                        label = label.split('/')[0].split('.')[0].title()
+                        label = label.replace('Tvad','TheVideo')
+                        host = '[B][COLOR white]%s[/COLOR][/B]' %label
+                        hosts.append(host)
+                        stream_url.append(link)
+        for link in match2:
+            link2 = link.replace('\/','')
+            link = 'https://openload.co/embed/'+link2
             if not 'wholecloud' in link:
                 if not 'vidtodo' in link:
                     if  urlresolver.HostedMediaFile(link).valid_url():   

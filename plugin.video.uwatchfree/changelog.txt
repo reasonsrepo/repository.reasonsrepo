@@ -1,1 +1,2 @@
+[B]Version 1.0.9 - 21 June 2018[/B] - Fixed No links issue, Added page count
 [B]Version 1.0.8 - 18 June 2018[/B] - Initial Release on [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR] & Fixed Hollywood, Bollywood and Bengali Movie selection
