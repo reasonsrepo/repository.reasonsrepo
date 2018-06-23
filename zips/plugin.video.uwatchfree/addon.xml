@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.uwatchfree" name="UwatchFree" version="1.0.9" provider-name="Dandymedia, Reasons">
+<addon id="plugin.video.uwatchfree" name="UwatchFree" version="1.0.10" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
@@ -12,9 +12,9 @@
   </extension>
   <extension point="xbmc.addon.metadata">
 	<summary lang="en">Movies and Tv Shows from uwatchfree</summary>
-	<description lang="en">This addon was originally developed DandyMedia</description>
-	<disclaimer lang="en">This addon doesn't host any content</disclaimer>
-  <news>[B]Version 1.0.9 - 21 June 2018[/B] - Fixed No links issue, Added page count</news>
+	<description lang="en">This addon was originally developed DandyMedia, and please read the disclaimer</description>
+	<disclaimer lang="en">UwatchFree addon is a web scraper coded to crawl and index uwatchfree.tv. This addon doesn't host any content therefore ReasonsRepo is not responsible for the accuracy, compliance, copyright, legality, decency, or any other aspect of the content from the scraped sites.</disclaimer>
+  <news>[B]Version 1.0.10 - 23 June 2018[/B] - Fixed No links issue, Added page count, Removed Dandymedia's name due to his request. </news>
 	<platform>all</platform>
   </extension>
 </addon>
