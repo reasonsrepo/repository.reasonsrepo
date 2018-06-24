@@ -1,0 +1,1 @@
+[B]Version 1.0.0 - 23 June 2018[/B] - Initial Release, need to fix (lastest episode not playing) issue
