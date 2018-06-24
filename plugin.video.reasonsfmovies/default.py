@@ -31,13 +31,13 @@ def Main_menu():
     addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
     addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
     addDir('[B][COLOR white]All TV Shows[/COLOR][/B]',BASEURL + 'kind/tv-series.html',595,ICON,FANART,'')
-#     addDir('[B][COLOR white]Top IMDB[/COLOR][/B]',BASEURL + 'imdb.html',69,ICON,FANART,'')
+    addDir('[B][COLOR white]Top IMDB[/COLOR][/B]',BASEURL + 'imdb.html',69,ICON,FANART,'')
     addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Country[/COLOR][/B]','',56,ICON,FANART,'')
     addDir('[B][COLOR white]Year[/COLOR][/B]','',63,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
     addDir('[B][COLOR red]Disclaimer: This addon is still in development and has some bugs. In future updates I will fix them.[/COLOR][/B]','','',ICON,FANART,'')
-    setView('tvshows', 'tvshows-view')
+    setView('files', 'menu-view')
 
 def Get_Genres():
     OPEN = Open_Url(BASEURL)
@@ -45,21 +45,21 @@ def Get_Genres():
     for url,name in Regex2:
             url = 'https://www6.fmovies.io/genre' + url
             addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,genreicon + name + '.png',FANART,'')
-    setView('tvshows', 'default-view')
+    setView('files', 'menu-view')
 def Get_year():
     OPEN = Open_Url(BASEURL)
     Regex2 = re.compile("<li><a href=\"/released-(.+?)\" class='ads-evt' title=\".+?\">(.+?)</a></li>",re.DOTALL).findall(OPEN)
     for url,name in Regex2:
             url = 'https://www6.fmovies.io/released-' + url
             addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,genreicon + name + '.png',FANART,'')
-    setView('tvshows', 'default-view')
+    setView('files', 'menu-view')
 def Get_country():
     OPEN = Open_Url(BASEURL)
     Regex2 = re.compile("<li><a href=\"/country(.+?)\" class='ads-evt' title=\".+?\">(.+?)</a></li>",re.DOTALL).findall(OPEN)
     for url,name in Regex2:
             url = 'https://www6.fmovies.io/country' + url
             addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,genreicon + name + '.png',FANART,'')
-    setView('tvshows', 'default-view')
+    setView('files', 'menu-view')
 	
 def Get_content(url):
 
@@ -118,7 +118,7 @@ def Get_imdb(url):
     for item in items:
             items = len(item)
             name1 = item.h3.text
-            name = name1
+            name = name1.replace('(','').replace(')','').replace('English Audio','[COLOR yellow]English Audio[/COLOR]')
             url1 = item.find('a')['href']
             url = 'https://www6.fmovies.io' + url1
             icon1 = item.find('img')['src'].strip()
