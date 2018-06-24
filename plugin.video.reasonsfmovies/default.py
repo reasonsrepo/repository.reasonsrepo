@@ -30,7 +30,7 @@ def Main_menu():
     addDir('[B][COLOR white]Latest Movies[/COLOR][/B]',BASEURL + 'latests/cinema-movies.html',5,ICON,FANART,'')
     addDir('[B][COLOR white]HD Movies[/COLOR][/B]',BASEURL + 'kind/movies.html',5,ICON,FANART,'')
     addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
-    addDir('[B][COLOR white]All TV Shows Movies[/COLOR][/B]',BASEURL + 'kind/tv-series.html',595,ICON,FANART,'')
+    addDir('[B][COLOR white]All TV Shows[/COLOR][/B]',BASEURL + 'kind/tv-series.html',595,ICON,FANART,'')
     addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Country[/COLOR][/B]','',56,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
