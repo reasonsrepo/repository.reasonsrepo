@@ -84,7 +84,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.reasonsfmovies" name="fMovies" version="1.0.3" provider-name="Reasons">
+<addon id="plugin.video.reasonsfmovies" name="fMovies" version="1.0.4" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>

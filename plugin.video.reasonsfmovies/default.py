@@ -216,7 +216,7 @@ def Get_tvepisodes(url):
                 addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
             except:
                 addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-    setView('movies', 'movie-view')
+    setView('files', 'menu-view')
 
 		
 	
