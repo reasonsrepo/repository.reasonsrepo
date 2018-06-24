@@ -28,12 +28,15 @@ metaget = metahandlers.MetaData()
 
 def Main_menu():
     addDir('[B][COLOR white]Latest Movies[/COLOR][/B]',BASEURL + 'latests/cinema-movies.html',5,ICON,FANART,'')
-    addDir('[B][COLOR white]HD Movies[/COLOR][/B]',BASEURL + 'kind/movies.html',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
     addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
     addDir('[B][COLOR white]All TV Shows[/COLOR][/B]',BASEURL + 'kind/tv-series.html',595,ICON,FANART,'')
+#     addDir('[B][COLOR white]Top IMDB[/COLOR][/B]',BASEURL + 'imdb.html',69,ICON,FANART,'')
     addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Country[/COLOR][/B]','',56,ICON,FANART,'')
+    addDir('[B][COLOR white]Year[/COLOR][/B]','',63,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
+    addDir('[B][COLOR red]Disclaimer: This addon is still in development and has some bugs. In future updates I will fix them.[/COLOR][/B]','','',ICON,FANART,'')
     setView('tvshows', 'tvshows-view')
 
 def Get_Genres():
@@ -41,6 +44,13 @@ def Get_Genres():
     Regex2 = re.compile("<li><a href=\"/genre(.+?)\" class='ads-evt' title=\".+?\">(.+?)</a></li>",re.DOTALL).findall(OPEN)
     for url,name in Regex2:
             url = 'https://www6.fmovies.io/genre' + url
+            addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,genreicon + name + '.png',FANART,'')
+    setView('tvshows', 'default-view')
+def Get_year():
+    OPEN = Open_Url(BASEURL)
+    Regex2 = re.compile("<li><a href=\"/released-(.+?)\" class='ads-evt' title=\".+?\">(.+?)</a></li>",re.DOTALL).findall(OPEN)
+    for url,name in Regex2:
+            url = 'https://www6.fmovies.io/released-' + url
             addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,genreicon + name + '.png',FANART,'')
     setView('tvshows', 'default-view')
 def Get_country():
@@ -96,6 +106,52 @@ def Get_content(url):
                 addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ',url,5,ART + 'nextpage.jpg',FANART,'')
     setView('movies', 'movie-view')
 
+def Get_imdb(url):
+
+    OPEN = Open_Url(url)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
+    mlink = SoupStrainer('figure')
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    plink = SoupStrainer('ul', {'class':'pagination'})
+    Paginator = BeautifulSoup(OPEN, parseOnlyThese=plink)
+    for item in items:
+            items = len(item)
+            name1 = item.h3.text
+            name = name1
+            url1 = item.find('a')['href']
+            url = 'https://www6.fmovies.io' + url1
+            icon1 = item.find('img')['src'].strip()
+            icon = 'https:' + icon1
+            if metaset=='true':
+                if 'season' in url:
+                        addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,23,icon,items)
+                else:
+                        try:
+                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
+                        except:
+                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+            else:
+                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+    if 'next' in str(Paginator):
+        nextli = Paginator.find('a', {'data-page':re.compile('1')})
+
+        purl = nextli.get('href')
+        url = url + purl
+        name = 'Next Page..'
+        addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ',url,5,ART + 'nextpage.jpg',FANART,'')
+    np = re.compile('<a href=\".+?page=(.+?)\" data-page=\"(.+?)\">.+?</a>',re.DOTALL).findall(OPEN)
+    
+    for url1,name in np:
+            url = url + '/?page=' + url1
+            print url
+            xbmc.log(url)
+            
+            if 'page' in np:
+                addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ',url,5,ART + 'nextpage.jpg',FANART,'')
+    setView('movies', 'movie-view')
+
+
 
 def Get_tvseries(url):
 
@@ -117,10 +173,13 @@ def Get_tvseries(url):
             icon1 = item.find('img')['src'].strip()
             icon = 'https:' + icon1
             if metaset=='true':
-                try:
-                        addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,23,icon,items)
-                except:
-                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,23,icon,FANART,'')
+                if 'season' not in url:
+                        addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
+                else:
+                        try:
+                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,23,icon,items)
+                        except:
+                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,23,icon,FANART,'')
             else:
                 addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,23,icon,FANART,'')
     if 'next' in str(Paginator):
@@ -161,13 +220,13 @@ def Get_tvepisodes(url):
 
 		
 	
-def Get_links(name,url):
-    OPEN = Open_Url(url)
-    Regex = re.compile('style="text-align:center">(.+?)</td>.+?href="(.+?)"',re.DOTALL).findall(OPEN)
-    for name2,url in Regex:
-            if urlresolver.HostedMediaFile(url):
-                    addDir('[B][COLOR white]%s[/COLOR][/B]' %name2,url,100,iconimage,FANART,name)
-    xbmc.executebuiltin('Container.SetViewMode(50)')
+# def Get_links(name,url):
+#     OPEN = Open_Url(url)
+#     Regex = re.compile('style="text-align:center">(.+?)</td>.+?href="(.+?)"',re.DOTALL).findall(OPEN)
+#     for name2,url in Regex:
+#             if urlresolver.HostedMediaFile(url):
+#                     addDir('[B][COLOR white]%s[/COLOR][/B]' %name2,url,100,iconimage,FANART,name)
+#     xbmc.executebuiltin('Container.SetViewMode(50)')
 
 
 def Search():
@@ -388,8 +447,10 @@ elif mode == 56: Get_country()
 elif mode == 5 : Get_content(url)
 elif mode == 23 : Get_tvepisodes(url)
 elif mode == 595 : Get_tvseries(url)
+elif mode == 63 : Get_year()
 elif mode == 6 : Search()
-elif mode == 10 : Get_links(name,url)
+elif mode == 69 : Get_imdb(url)
+# elif mode == 10 : Get_links(name,url)
 elif mode == 99 : PT(url)
 elif mode == 100 : resolve(name,url,iconimage,description)
 
