@@ -84,7 +84,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.reasonsfmovies" name="fMovies" version="1.0.4" provider-name="Reasons">
+<addon id="plugin.video.reasonsfmovies" name="fMovies" version="1.0.5" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
@@ -101,7 +101,7 @@ provider-name="Reasons">
   <summary>fMovie</summary>
 	<description lang="en">This is a brand new addon for fmovies.to</description>
 	<disclaimer lang="en">fMovies addon is created by ReasonsRepo, this addon do not host or upload any videos or movies other than indexing them.Therefore, ReasonsRepo is not responsible for the accuracy, compliance, copyright, legality, decency, or any other aspect of the content from the scraped sites.</disclaimer>
-  <news>[B]Version 1.0.2 - 24 June 2018[/B] - Added more more options. Fixed playback issue. (Still need to fix the latest episode not playing issue)</news>
+  <news>[B]Version 1.0.5 - 27 June 2018[/B] - Added an option to play latest episode (just a temporary fix), also added an option in settings to change site url (currenyly only 2 sites are supported)</news>
 	<platform>all</platform>
   </extension>
 </addon>

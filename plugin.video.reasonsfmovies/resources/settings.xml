@@ -8,7 +8,9 @@
     <setting label="  [COLOR red]Click Here To Check For Updates For All Your Addons/Repos[/COLOR]" type="action" action="UpdateAddonRepos"/>
     </category>
     <category label="Site-Url">
-		<setting id="base_url" type="text" label="BaseUrl" default="https://www6.fmovies.io/" visible="true"/>
+    <setting type="lsep" label="You can also use https://bmovies.cz/"/>
+		<setting id="base_url" type="text" label="Site URL" default="https://www6.fmovies.io/" visible="true"/>
+    <setting type="lsep" label="[COLOR red]Please make sure to add / after the url[/COLOR]"/>
 	  </category>
     <category label="Meta Settings">
     <setting id="enable_meta" type="bool" label="Enable Metadata" default="true"/>

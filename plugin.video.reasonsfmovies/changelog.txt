@@ -1,1 +1,8 @@
+[B]Version 1.0.5 - 27 June 2018[/B] - Added an option to play latest episode (just a temporary fix), also added an option in settings to change site url (currenyly only 2 sites are supported)
+.............................................................................................................................................
+[B]Version 1.0.4 - 24 June 2018[/B] - Added more more options. Fixed playback issue. (Still need to fix the latest episode not playing issue)
+[B]Version 1.0.3 - 24 June 2018[/B] - Added more more options. Fixed playback issue. (Still need to fix the latest episode not playing issue)
+[B]Version 1.0.2 - 24 June 2018[/B] - Added more more options. Fixed playback issue. (Still need to fix the latest episode not playing issue)
+[B]Version 1.0.1 - 24 June 2018[/B] - Added more more options. Fixed playback issue. (Still need to fix the latest episode not playing issue)
+.............................................................................................................................................
 [B]Version 1.0.0 - 23 June 2018[/B] - Initial Release, need to fix (lastest episode not playing) issue

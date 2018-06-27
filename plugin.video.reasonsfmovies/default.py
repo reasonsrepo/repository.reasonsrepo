@@ -29,8 +29,8 @@ metaget = metahandlers.MetaData()
 def Main_menu():
     addDir('[B][COLOR white]Latest Movies[/COLOR][/B]',BASEURL + 'latests/cinema-movies.html',5,ICON,FANART,'')
     addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
-    addDir('[B][COLOR white]Latest TV Series[/COLOR][/B]',BASEURL + 'latest/tv-series.html',595,ICON,FANART,'')
     addDir('[B][COLOR white]All TV Shows[/COLOR][/B]',BASEURL + 'kind/tv-series.html',595,ICON,FANART,'')
+    addDir('[B][COLOR white]Latest TV Episodes[/COLOR][/B]',BASEURL + 'latest/tv-series.html',565,ICON,FANART,'')
     addDir('[B][COLOR white]Top IMDB[/COLOR][/B]',BASEURL + 'imdb.html',69,ICON,FANART,'')
     addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Country[/COLOR][/B]','',56,ICON,FANART,'')
@@ -105,6 +105,61 @@ def Get_content(url):
             if 'page' in np:
                 addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ',url,5,ART + 'nextpage.jpg',FANART,'')
     setView('movies', 'movie-view')
+
+
+
+def Get_latestepisode(url):
+
+    OPEN = Open_Url(url)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
+    mlink = SoupStrainer('figure')
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    plink = SoupStrainer('ul', {'class':'pagination'})
+    Paginator = BeautifulSoup(OPEN, parseOnlyThese=plink)
+    for item in items:
+            items = len(item)
+            name1 = item.h3.text
+            name = name1.replace('(','').replace(')','')
+            url1 = item.find('a')['href']
+            url = 'https://www6.fmovies.io' + url1
+            icon1 = item.find('img')['src'].strip()
+            icon = 'https:' + icon1
+            try:
+                episode = item.div.div.text
+            except:
+                episode = ''
+            if metaset=='true':
+                try:
+                        addDir2('[B][COLOR white]%s[/COLOR][/B]' %name + ' [COLOR yellow]episode ' + episode,url,100,icon,items)
+                except:
+                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+            else:
+                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+    if 'next' in str(Paginator):
+        nextli = Paginator.find('a', {'data-page':re.compile('1')})
+
+        purl = nextli.get('href')
+        url = url + purl
+        name = 'Next Page..'
+        addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ',url,5,ART + 'nextpage.jpg',FANART,'')
+    np = re.compile('<a href=\".+?page=(.+?)\" data-page=\"(.+?)\">.+?</a>',re.DOTALL).findall(OPEN)
+    
+    for url1,name in np:
+            url = url + '/?page=' + url1
+            print url
+            xbmc.log(url)
+            
+            if 'page' in np:
+                addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ',url,5,ART + 'nextpage.jpg',FANART,'')
+    setView('movies', 'movie-view')
+
+
+
+
+
+
+
 
 def Get_imdb(url):
 
@@ -236,7 +291,6 @@ def Search():
                 search = keyb.getText().replace(' ','+')
                 url = BASEURL + 'search.html?keyword=' + search + '&submit=Search'
                 Get_content(url)
-    
 
 ########################################
 
@@ -447,6 +501,7 @@ elif mode == 56: Get_country()
 elif mode == 5 : Get_content(url)
 elif mode == 23 : Get_tvepisodes(url)
 elif mode == 595 : Get_tvseries(url)
+elif mode == 565 : Get_latestepisode(url)
 elif mode == 63 : Get_year()
 elif mode == 6 : Search()
 elif mode == 69 : Get_imdb(url)
