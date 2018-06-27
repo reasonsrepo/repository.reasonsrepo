@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.watchonlinemovies"
-version="0.1.4"
+version="0.1.5"
 name="WatchOnlineMovies"
 provider-name="Reasons">
 <requires>

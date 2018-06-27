@@ -67,8 +67,8 @@ def get_categories():
     items = {'ARecently Uploaded Movies': bu,
             'B2018 Movies': bu + 'category/indian-movies/2018-full-movies/',
             'C2018 English Movies': bu + 'category/hollywood-movies/2018-movies-hollywood/',
-            'Y[COLOR yellow]** Search **[/COLOR]': bu + '?s=',
-            'Z[COLOR red]Note: This addon is still in development, so please keep it updated [/COLOR]': 'book'}
+            'D[COLOR yellow]** Search **[/COLOR]': bu + '?s=',
+            'Z[COLOR red]Note: This addon is no longer supported, please install WatchOnlineMovies-New from ReasonsRepository [/COLOR]': 'book'}
     
     return items
 
