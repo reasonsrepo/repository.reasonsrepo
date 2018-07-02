@@ -1,1 +1,2 @@
-[B]Version 1.0.8 - 18 June 2018[/B] - Initial Release on [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR] & Fixed Hollywood, Bollywood and Bengali Movie selection
+[B]Version 1.0.1 - 02 July 2018[/B] - Added Years in Main Menu, Added an option to enable and disable dubbed movies
+[B]Version 1.0.1 - 02 July 2018[/B] - Initial Release

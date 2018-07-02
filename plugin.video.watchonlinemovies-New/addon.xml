@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.0" provider-name="Reasons">
+<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.1" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
@@ -14,7 +14,7 @@
   <summary>WatchOnlineMovies-New</summary>
 	<description lang="en">This is a brand new addon for watchonlinemovies.com.pk</description>
 	<disclaimer lang="en">This addon doesn't host any content</disclaimer>
-  <news>[B]Version 1.0.0 - 19 June 2018[/B] - Initial Release</news>
+  <news>[B]Version 1.0.1 - 02 July 2018[/B] - Added Years in Main Menu, Added an option to enable and disable dubbed movies</news>
 	<platform>all</platform>
   </extension>
 </addon>

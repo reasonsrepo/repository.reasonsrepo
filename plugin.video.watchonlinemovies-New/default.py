@@ -18,6 +18,8 @@ VERSION = ADDON.getAddonInfo('version')
 ART = ADDON_PATH + "/resources/icons/"
 BASEURL = 'http://www.watchonlinemovies.com.pk/'
 metaset = selfAddon.getSetting('enable_meta')
+enbdubbed = selfAddon.getSetting('enable-dubbed')
+enbpunj = selfAddon.getSetting('enable-punjabi')
 metaget = metahandlers.MetaData()
 
 
@@ -26,32 +28,73 @@ def Main_menu():
     addDir('[B][COLOR white]Hollywood Movies[/COLOR][/B]',BASEURL + 'category/hollywood-movies/2018-movies-hollywood/',5,ICON,FANART,'')
     addDir('[B][COLOR white]HINDI Movies[/COLOR][/B]',BASEURL + 'category/indian-movies/2018-full-movies/',5,ICON,FANART,'')
     addDir('[B][COLOR white]Categories[/COLOR][/B]','',3,ICON,FANART,'')
+    addDir('[B][COLOR white]Year[/COLOR][/B]','',33,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
-    setView('tvshows', 'tvshows-view')
+    setView('files', 'menu-view')
 
 def Get_Genres():
     OPEN = Open_Url(BASEURL)
-    Regex2 = re.compile('<li id="menu-item-.+?" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-.+?"><a href="(.+?)">(.+?)<',re.DOTALL).findall(OPEN)
+    Regex2 = re.compile('<li id="menu-item-.+?" class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-.+?"><a href="(.+?)">(.+?)</a></li><li id=\"menu-item-',re.DOTALL).findall(OPEN)
     for url,name in Regex2:
             addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,ICON,FANART,'')
-    setView('tvshows', 'default-view')
+#     xbmcplugin.SORT_METHOD_TITLE
+    setView('files', 'menu-view')
 	
+
+def Get_year():
+    addDir('[B][COLOR white]2018 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2018-full-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2017 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2017-full-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2016 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2016-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2015 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2015-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2014 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2014-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2013 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2013-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2012 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2012-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2011 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2011-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2010 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2010-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2009 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2009-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2008 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2008-movies-list/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2007 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2007-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2006 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2006-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2005 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2005-movies-list/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2004 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2004-movies-list/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2003 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2003-movies-list/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2002 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2002-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2001 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2001-movies-list/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]2000 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2000-movies-list/',5,ICON,FANART,'')
+    setView('files', 'menu-view')
+
+
+
 def Get_content(url):
 
     OPEN = Open_Url(url)
-#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
-    Regex2 = re.compile('<div class="boxtitle">.+? href="(.+?)" rel="bookmark" title="(.+?) Full.+?".+?\n.*?\n.+?\n<img.+?src="(.+?)" class',re.DOTALL).findall(OPEN)
-    for url,name,icon in Regex2:
-            items = len(Regex2)
-            name = name.replace('&#8217;','').replace(' Watch','').replace('#038;','').replace(' Online','')
-            if metaset=='true':
-                    try:
-                            addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
-                    except:
-                            addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-            else:
-                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-    np = re.compile('<a class="nextpostslink" rel="next" href="(.+?)">(.+?)</a>',re.DOTALL).findall(OPEN)
+    if enbdubbed=='true':
+        Regex2 = re.compile('<div class="boxtitle">.+? href="(.+?)" rel="bookmark" title="(.+?)Full.+?".+?\n.*?\n.+?\n<img.+?src="(.+?)" class',re.DOTALL).findall(OPEN)
+        for url,name,icon in Regex2:
+                items = len(Regex2)
+                name = name.replace('&#8217;','').replace(' Watch','').replace('#038;','').replace(' Online','').replace('&#8230;','…')
+                if metaset=='true':
+                        try:
+                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
+                        except:
+                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+                else:
+                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+        np = re.compile('<a class="nextpostslink" rel="next" href="(.+?)">(.+?)</a>',re.DOTALL).findall(OPEN)
+    elif enbdubbed=='false':
+        Regex2 = re.compile('<div class="boxtitle">.+? href="(.+?)" rel="bookmark" title="(((?!Hindi Dubbed).)+?) Full.+?".+?\n.*?\n.+?\n<img.+?src="(.+?)" class',re.DOTALL).findall(OPEN)
+        for url,name,idk,icon in Regex2:
+                items = len(Regex2)
+                name = name.replace('&#8217;','').replace(' Watch','').replace('#038;','').replace(' Online','').replace('&#8230;','…')
+                if metaset=='true':
+                        try:
+                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
+                        except:
+                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+                else:
+                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+        np = re.compile('<a class="nextpostslink" rel="next" href="(.+?)">(.+?)</a>',re.DOTALL).findall(OPEN)
+    
     
     for url,name in np:
             if 'page' in url:
@@ -270,6 +313,7 @@ print "IconImage: "+str(iconimage)
 	
 if mode == None: Main_menu()
 elif mode == 3: Get_Genres()
+elif mode == 33: Get_year()
 elif mode == 5 : Get_content(url)
 elif mode == 6 : Search()
 elif mode == 10 : Get_links(name,url)
