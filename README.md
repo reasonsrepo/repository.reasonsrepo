@@ -2,9 +2,6 @@
 Reasons Repo
 
 This is a Brand new repository for all kind of new Kodi addons,
-Currently I am only making Hindi addons, but in future I will create more English Movies addons.
-Right now I have no plans on creating a Tv Show addon, as it requires a lot of time and effort.
-
 I am still learning python so my addon might have some bugs.
 
 If you have any suggestions or maybe just wanna say thanks then click on the link below
