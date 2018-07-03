@@ -211,26 +211,23 @@ def resolve(name,url,iconimage,description):
         OPEN = Open_Url(url)
         match = re.compile('<iframe src="(.+?)"',re.DOTALL).findall(OPEN)
         match2 = re.compile('<IFRAME SRC="(.+?)"',re.DOTALL).findall(OPEN)
+
         for link in match:
-            if not 'wholecloud' in link:
-                if not 'vidtodo' in link:
-                    if  urlresolver.HostedMediaFile(link).valid_url():   
-                        label = link.split('//')[1].replace('www.','')
-                        label = label.split('/')[0].split('.')[0].title()
-                        label = label.replace('Tvad','TheVideo')
-                        host = '[B][COLOR white]%s[/COLOR][/B]' %label
-                        hosts.append(host)
-                        stream_url.append(link)
+            if  urlresolver.HostedMediaFile(link).valid_url():   
+                label = link.split('//')[1].replace('www.','')
+                label = label.split('/')[0].split('.')[0].title()
+                label = label.replace('Tvad','TheVideo')
+                host = '[B][COLOR white]%s[/COLOR][/B]' %label
+                hosts.append(host)
+                stream_url.append(link)
         for link in match2:
-            if not 'wholecloud' in link:
-                if not 'vidtodo' in link:
-                    if  urlresolver.HostedMediaFile(link).valid_url():   
-                        label = link.split('//')[1].replace('www.','')
-                        label = label.split('/')[0].split('.')[0].title()
-                        label = label.replace('Tvad','TheVideo')
-                        host = '[B][COLOR white]%s[/COLOR][/B]' %label
-                        hosts.append(host)
-                        stream_url.append(link)
+                if  urlresolver.HostedMediaFile(link).valid_url():   
+                    label = link.split('//')[1].replace('www.','')
+                    label = label.split('/')[0].split('.')[0].title()
+                    label = label.replace('Tvad','TheVideo')
+                    host = '[B][COLOR white]%s[/COLOR][/B]' %label
+                    hosts.append(host)
+                    stream_url.append(link)
         if len(match) >1:
                 dialog = xbmcgui.Dialog()
                 ret = dialog.select('Please Select Host',hosts)
@@ -250,6 +247,7 @@ def resolve(name,url,iconimage,description):
        liz.setPath(stream)
        xbmcplugin.setResolvedUrl(int(sys.argv[1]), True, liz)
     except:pass
+
 
 def get_params():
         param=[]
