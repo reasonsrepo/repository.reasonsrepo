@@ -9,7 +9,7 @@
         <setting label="  [COLOR red]Click Here To Check For Updates For All Your Addons/Repos[/COLOR]" type="action" action="UpdateAddonRepos"/>
     </category>
     <category label="language Options">
-        <setting id="enable-dubbed" type="bool" label="Enable Dubbed Movies" default="true"/>
+        <setting id="enable-dubbed" type="bool" label="Enable Dubbed Movies" default="false"/>
         <setting type="lsep" label="Coming Soon"/>
         <setting id="enable-punjabi" type="bool" label="Enable Punjabi Movies" default="true"/>
     </category>
