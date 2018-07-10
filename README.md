@@ -11,54 +11,28 @@ Click here to <a href="mailto:reasonsrepo@gmail.com">Email Me</a>
 Email in plain text format
 reasonsrepo@gmail.com
 
+Visit our website to find the latest changelog and the list of available addons
+http://reasonsrepo.ml/
 
 # How to install Reasons Repository in Kodi?
 <b>Follow these steps below</b>
-
-1. <a href="https://github.com/reasonsrepo/repository.reasonsrepo/tree/master/zips/repository.reasonsrepo">Click here to visit the repository folder</a>
-2. Download repository.reasonsrepo-x.x.x.zip by following Step 1
-3. Open Kodi
-4. Go to "Addons" section inside of Kodi
-<img src="https://bestforkodi.com/wp-content/uploads/2017/02/6-2.jpg">
-
-5. Click on the left addons icon
-
-<img src="https://bestforkodi.com/wp-content/uploads/2017/02/7-2.jpg">
-
-6. Select <b>Install from zip file</b>
-
-<img src="https://kodi.wiki/images/thumb/8/8c/Addon_install_from_zip.png/500px-Addon_install_from_zip.png">
-
-7. Now locate the downloaded zip file for Reasons repository
-<img src="https://kodi.wiki/images/thumb/8/83/Addon_install_from_zip_3.png/500px-Addon_install_from_zip_3.png">
-
-8.  Once you have navigated to the zip file you want installed, select it then select OK. After your add-on and any dependencies have finished installing you will be able to use it.
-
-# How to install the repository using Git Browser
-1. Open Git Browser
-2. Select "Search by Github Username"
-3. Select "<b style="color:yellow;">*** New Search ***</b>"
-4. Write "<b>reasonsrepo</b>"
-5. Hit enter
-6. Now Select "<b>repository.reasonsrepo-x.x.x.zip</b>"
-7. Click on Install
-8. Restart Kodi to start downloading all new Kodi addons
-
-# How to install the repository on fire tv/stick
-
-Step 1- Open downloader
-
-Step 2- paste this link
-
-https://github.com/reasonsrepo/repository.reasonsrepo/blob/master/zips/repository.reasonsrepo/repository.reasonsrepo-1.0.0.zip?raw=true
-
-Step 3- download it
-
-Step 4- open Kodi
-
-Step 5- go to addons and then install from zip file
-
-
-Step 6- browse to the downloaded location (external storage -->downloader)
-
-Step 7- Click on the zip file to install the repo
+<li>1. The first thing you need to do after launching Kodi Krypton is click on the <strong>Settings</strong> Icon in the top left corner.</li>
+<li>2. Then, go to <strong>System Settings -&gt; Expert Mode -&gt; Addons.</strong></li>
+<li>3. Make sure to turn on<strong> ‘Unknown Sources.’</strong> Otherwise, you will not be able to install third-party add-ons.</li>
+<li>4. When the warning box pops up, click <strong>‘Yes’</strong>.</li>
+<li>5. Now go back to the Kodi homescreen, and click on the ‘Settings’ icon.</li>
+<li>6. From here, go to<em> File Manager -&gt; Add Source.</em></li>
+<li>7. Select None and then enter the following path without the quotes <strong>“http://reasonsrepo.ml/repo/”</strong>.</li>
+<li>8. Name it ‘<strong>ReasonsRepo</strong>’ and click ‘OK’.</li>
+<li>9. From the Kodi homescreen, select Addons.</li>
+<li>10. Click on the <strong>Package Installer Icon</strong> at the top left corner.</li>
+<li>11. Choose <strong>‘Install from Zip file’.</strong></li>
+<li>12. Now choose &#8216;<strong>ReasonsRepo</strong>&#8216;.</li>
+<li>13. Select <strong>repository.reasonsrepo-1.0.X.zip</strong> and install it.</li>
+<li>14. Wait until you see the add-on enabled notification.</li>
+<li>15. Now, select <strong>Install from repository</strong>.</li>
+<li>16. Choose <strong>Reasons Repository</strong> to open it.</li>
+<li>17. Click on <strong>Video Add-ons</strong></li>
+<li>19. Now you can install whichever addon you want to</li>
+<br><br>
+You can also follow these steps to install Reasons Repository on Fire Tv/Android Tv Box
