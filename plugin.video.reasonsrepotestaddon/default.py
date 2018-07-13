@@ -25,7 +25,7 @@ metaget = metahandlers.MetaData()
 
 
 def Main_menu():
-    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','',None,ICON,FANART,'')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'')
     addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL,5,ICON,FANART,'')
     addDir('[B][COLOR white]All Movies[/COLOR][/B]',BASEURL + 'movies/',5,ICON,FANART,'')
     addDir('[B][COLOR white]Trending Movies[/COLOR][/B]',BASEURL + 'trending/?get=movies',5,ICON,FANART,'')
@@ -34,8 +34,30 @@ def Main_menu():
     addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Year[/COLOR][/B]','',33,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
-    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','',None,ICON,FANART,'')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','',0,ICON,FANART,'')
     setView('files', 'menu-view')
+
+
+
+
+def uninstall(url):
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'')
+    addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL,5,ICON,FANART,'')
+    addDir('[B][COLOR white]All Movies[/COLOR][/B]',BASEURL + 'movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Trending Movies[/COLOR][/B]',BASEURL + 'trending/?get=movies',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Top Rated[/COLOR][/B]',BASEURL + 'ratings/?get=movies',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Top Rated[/COLOR][/B]',BASEURL + 'ratings/?get=movies',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
+    addDir('[B][COLOR white]Year[/COLOR][/B]','',33,ICON,FANART,'')
+    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','',0,ICON,FANART,'')
+    setView('files', 'menu-view')
+    xbmc.executebuiltin("XBMC.Notification([COLOR red]DELETE ME[/COLOR],[COLOR cornflowerblue]I am just a testing addon so you should uninstall me[/COLOR] ,100000)")
+
+
+
+
+
 
 def Get_Genres():
     OPEN = Open_Url(BASEURL + 'trending/')
@@ -348,6 +370,6 @@ elif mode == 10 : Get_links(name,url)
 elif mode == 99 : PT(url)
 elif mode == 100 : resolve(name,url,iconimage,description)
 elif mode == 56 : get_search(url)
-
+elif mode == 0 : uninstall(url)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
