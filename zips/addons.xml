@@ -30,28 +30,6 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.einthusan"
-       name="Einthusan"
-       version="1.4.0"
-       provider-name="humla">
-    <requires>
-        <import addon="xbmc.python" version="2.1.0"/>
-        <import addon="script.module.requests" version="2.0.0" />
-    </requires>
-    <extension point="xbmc.python.pluginsource"
-               library="default.py">
-        <provides>video</provides>
-    </extension>
-    <extension point="xbmc.addon.metadata">
-        <platform>all</platform>
-        <summary>Watch Hindi, Tamil  movies</summary>
-        <description>This XBMC plugin allows to watch all movies from Einthusan.tv. Please support them.
-
-        Credits to suriya222 for the thumbnails.</description>
-		<news>[B]Version 1.4.0 - 11th May 2018[/B] - Fixed Recent movies list</news>
-    </extension>
-</addon>
-
 <addon id="plugin.video.movierulz"
 version="0.1.0"
 name="Movie Rulz"
