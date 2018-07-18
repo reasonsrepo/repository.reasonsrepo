@@ -1,3 +1,4 @@
+[B]Version 1.0.3 - 17 July 2018[/B] - [COLOR yellow] Enabled Dubbed movies by default to prevent no link issues[/COLOR]
 [B]Version 1.0.2 - 02 July 2018[/B] - [COLOR yellow] Fixed Video Not Playing[/COLOR] Added Years in Main Menu, Added an option to enable and disable dubbed movies
 [B]Version 1.0.1 - 02 July 2018[/B] - Added Years in Main Menu, Added an option to enable and disable dubbed movies
 [B]Version 1.0.1 - 02 July 2018[/B] - Initial Release

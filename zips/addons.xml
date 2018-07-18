@@ -206,7 +206,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.2" provider-name="Reasons">
+<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.3" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
@@ -220,8 +220,8 @@ provider-name="Reasons">
   <extension point="xbmc.addon.metadata">
   <summary>WatchOnlineMovies-New</summary>
 	<description lang="en">This is a brand new addon for watchonlinemovies.com.pk</description>
-	<disclaimer lang="en">This addon doesn't host any content</disclaimer>
-  <news>[B]Version 1.0.2 - 02 July 2018[/B] - [COLOR yellow] Fixed Video Not Playing[/COLOR] Added Years in Main Menu, Added an option to enable and disable dubbed movies</news>
+	<disclaimer lang="en">This addon doesn't host any content, so ReasonsRepository is not responsible for any copyrighted content. So don't sue the developer :P </disclaimer>
+  <news>[B]Version 1.0.3 - 17 July 2018[/B] - [COLOR yellow] Enabled Dubbed movies by default to prevent no link issues[/COLOR]</news>
 	<platform>all</platform>
   </extension>
 </addon>
