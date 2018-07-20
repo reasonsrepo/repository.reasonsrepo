@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
 import urllib2, urllib, xbmcgui, xbmcplugin, xbmc, re, sys, os, ReasonsRepo,xbmcaddon,base64
 import urlresolver
+from urlparse import parse_qsl
 from addon.common.addon import Addon
 from metahandler import metahandlers
+from BeautifulSoup import BeautifulSoup, SoupStrainer
+import requests,json
+import jsunpack
+
+
+
 
 
 addon_id='plugin.video.watchonlinemovies-New'
@@ -68,39 +75,60 @@ def Get_year():
 def Get_content(url):
 
     OPEN = Open_Url(url)
-    if enbdubbed=='true':
-        Regex2 = re.compile('<div class="boxtitle">.+? href="(.+?)" rel="bookmark" title="(.+?)Full.+?".+?\n.*?\n.+?\n<img.+?src="(.+?)" class',re.DOTALL).findall(OPEN)
-        for url,name,icon in Regex2:
-                items = len(Regex2)
-                name = name.replace('&#8217;','').replace(' Watch','').replace('#038;','').replace(' Online','').replace('&#8230;','…')
-                if metaset=='true':
-                        try:
-                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
-                        except:
-                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-                else:
-                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-        np = re.compile('<a class="nextpostslink" rel="next" href="(.+?)">(.+?)</a>',re.DOTALL).findall(OPEN)
-    elif enbdubbed=='false':
-        Regex2 = re.compile('<div class="boxtitle">.+? href="(.+?)" rel="bookmark" title="(((?!Hindi Dubbed|Punjabi).)+?) Full.+?".+?\n.*?\n.+?\n<img.+?src="(.+?)" class',re.DOTALL).findall(OPEN)
-        for url,name,idk,icon in Regex2:
-                items = len(Regex2)
-                name = name.replace('&#8217;','').replace(' Watch','').replace('#038;','').replace(' Online','').replace('&#8230;','…')
-                if metaset=='true':
-                        try:
-                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
-                        except:
-                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-                else:
-                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-        np = re.compile('<a class="nextpostslink" rel="next" href="(.+?)">(.+?)</a>',re.DOTALL).findall(OPEN)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
+
+    mlink = SoupStrainer('div', {'class':re.compile('postbox')})
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    plink = SoupStrainer('div', {'class':'wp-pagenavi'})
+    Paginator = BeautifulSoup(OPEN, parseOnlyThese=plink)
+    for item in items:
+        items = len(item)
+        name1 = item.h2.text
+        if 'Hindi' in name1:
+                name2 = re.compile('(.+?)Hindi.+',re.DOTALL).findall(name1)
+                # for name in name2:
+                #     name = name
+                try:
+                    name2 = ''.join(map(str, name2))
+                    name = name2.replace("\u2019s","s")
+                    
+                except:
+                    name3 = name2
+                    name = name3
+        elif 'Full' in name1:
+            name2 = re.compile('(.+?)Full.+',re.DOTALL).findall(name1)
+        #     for name in name2:
+        #         name = name
+            try:
+                name2 = ''.join(map(str, name2))
+                name = name2.replace("\u2019s","s")
+                
+            except:
+                name3 = name2
+                name = name3
+        url1 = item.h2.find('a')['href'].strip()
+        url = url1
+        try:
+            icon = item.find('img')['src'].strip()
+        except:
+            icon = ICON
+        if metaset=='true':
+            try:
+                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
+            except:
+                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+        else:
+            addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
     
-    
-    for url,name in np:
-            if 'page' in url:
-                    allpages = re.compile('<span class=\'pages\'>(.+?)<',re.DOTALL).findall(OPEN)
-                    for pages in allpages:    
-                        addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
+    if 'next' in str(Paginator):
+        nextli = Paginator.find('a', {'class':re.compile('page larger')})
+        purl = nextli.get('href')
+        pages = Paginator.findAll('span', {'class':re.compile('pages')})
+        lastpg = pages[len(pages)-1].text
+        title = '[B][COLOR blue]Next Page..[/COLOR][COLOR yellow] (Currently in %s)' % (lastpg) + '[/COLOR][/B]'
+        xbmc.log(purl)
+        addDir(title,purl,5,ART + 'nextpage.jpg',FANART,'')
     setView('movies', 'movie-view')
 		
 	
@@ -135,7 +163,7 @@ def Open_Url(url):
 
 
 def addDir(name,url,mode,iconimage,fanart,description):
-    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&description="+urllib.quote_plus(description)
+    u=sys.argv[0]+'?url='+urllib.quote_plus(url)+'&mode='+str(mode)+'&name='+urllib.quote_plus(name)+'&iconimage='+urllib.quote_plus(iconimage)+'&description='+urllib.quote_plus(description)
     ok=True
     liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
     liz.setInfo( type="Video", infoLabels={"Title": name,"Plot":description})

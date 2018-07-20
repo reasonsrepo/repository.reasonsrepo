@@ -9,7 +9,7 @@
         <setting label="  [COLOR red]Click Here To Check For Updates For All Your Addons/Repos[/COLOR]" type="action" action="UpdateAddonRepos"/>
     </category>
     <category label="language Options">
-        <setting type="lsep" label="Disabling Dubbed Movies might give error message (this should be fixed in future update)"/>
+        <setting type="lsep" label="[COLOR yellow]Temporarily Disabled, Should be fixed in next update[/COLOR]"/>
         <setting id="enable-dubbed" type="bool" label="Enable Dubbed/Punjabi Movies" default="true"/>
     </category>
 </settings>
