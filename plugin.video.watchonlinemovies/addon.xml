@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.watchonlinemovies"
-version="0.1.5"
+version="0.1.6"
 name="WatchOnlineMovies"
 provider-name="Reasons">
 <requires>
@@ -15,6 +15,7 @@ provider-name="Reasons">
 </extension>
 <extension point="xbmc.addon.metadata">
   <summary>WatchOnlineMovies</summary>
+  <broken>Created a new addon for this same site</broken>
   <description>WatchOnlineMovies is a popular site to watch Hindi Movies for free</description>
   <disclaimer>This addon searches watchonlinemovies.com.pk to find movie link. The addon itself doesn't host any content.</disclaimer>
 	<news>[B]Version 0.1.4 - 01 June 2018[/B] - Removed Menus, Fixed Navigation, Removed all the extra information from movie title (Almost worked), Color coded years and languages</news>
