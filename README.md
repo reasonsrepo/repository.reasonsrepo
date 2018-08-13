@@ -14,7 +14,6 @@ reasonsrepo@gmail.com
 Visit our website to find the latest changelog and the list of available addons
 http://reasonsrepo.ml/
 
-
 # How to install Reasons Repository in Kodi?
 <b>Follow these steps below</b>
 <li>1. The first thing you need to do after launching Kodi Krypton is click on the <strong>Settings</strong> Icon in the top left corner.</li>
