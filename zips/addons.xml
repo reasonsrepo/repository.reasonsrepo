@@ -106,7 +106,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.reasonsrepotestaddon" name="Reasons Repo Test Addon" version="0.00.0" provider-name="Reasons">
+<addon id="plugin.video.reasonsrepotestaddon" name="Reasons Repo Test Addon" version="0.00.1" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>

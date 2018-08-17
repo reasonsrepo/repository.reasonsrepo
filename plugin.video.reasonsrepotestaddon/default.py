@@ -1,8 +1,12 @@
 # -*- coding: utf-8 -*-
 import urllib2, urllib, xbmcgui, xbmcplugin, xbmc, re, sys, os, ReasonsRepo,xbmcaddon,base64
 import urlresolver
+from urlparse import parse_qsl
 from addon.common.addon import Addon
 from metahandler import metahandlers
+from BeautifulSoup import BeautifulSoup, SoupStrainer
+import requests,json
+import jsunpack
 
 
 addon_id='plugin.video.reasonsrepotestaddon'
@@ -16,67 +20,52 @@ FANART = ADDON.getAddonInfo('fanart')
 PATH = 'Reasons Repo Test Addon'
 VERSION = ADDON.getAddonInfo('version')
 ART = ADDON_PATH + "/resources/icons/"
-BASEURL = 'https://gomomovies.online/'
+BASEURL = 'https://ww5.dubbedanime.net/'
 genreicon = ADDON_PATH + "/resources/genres/"
 metaset = selfAddon.getSetting('enable_meta')
 enbdubbed = selfAddon.getSetting('enable-dubbed')
-enbpunj = selfAddon.getSetting('enable-punjabi')
 metaget = metahandlers.MetaData()
 
 
+
+
 def Main_menu():
-    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'')
-    addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL,5,ICON,FANART,'')
-    addDir('[B][COLOR white]All Movies[/COLOR][/B]',BASEURL + 'movies/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Trending Movies[/COLOR][/B]',BASEURL + 'trending/?get=movies',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Top Rated[/COLOR][/B]',BASEURL + 'ratings/?get=movies',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Top Rated[/COLOR][/B]',BASEURL + 'ratings/?get=movies',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
-    addDir('[B][COLOR white]Year[/COLOR][/B]','',33,ICON,FANART,'')
-    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
-    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','',0,ICON,FANART,'')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Latest Episodes[/COLOR][/B]',BASEURL,5,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Ongoing Anime[/COLOR][/B]',BASEURL + 'ongoing-anime',9,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'','')
+    addDir('[B][COLOR white]Random[/COLOR][/B]','url',3,ICON,FANART,'','')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'','','')
     setView('files', 'menu-view')
-
-
-
 
 def uninstall(url):
-    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'')
-    addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL,5,ICON,FANART,'')
-    addDir('[B][COLOR white]All Movies[/COLOR][/B]',BASEURL + 'movies/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Trending Movies[/COLOR][/B]',BASEURL + 'trending/?get=movies',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Top Rated[/COLOR][/B]',BASEURL + 'ratings/?get=movies',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Top Rated[/COLOR][/B]',BASEURL + 'ratings/?get=movies',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Genre[/COLOR][/B]','',3,ICON,FANART,'')
-    addDir('[B][COLOR white]Year[/COLOR][/B]','',33,ICON,FANART,'')
-    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
-    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','',0,ICON,FANART,'')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Latest Episodes[/COLOR][/B]',BASEURL,5,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Ongoing Anime[/COLOR][/B]',BASEURL + 'ongoing-anime',9,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'','','')
+    addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'','','')
     setView('files', 'menu-view')
-    xbmc.executebuiltin("XBMC.Notification([COLOR red]DELETE ME[/COLOR],[COLOR cornflowerblue]I am just a testing addon so you should uninstall me[/COLOR] ,100000)")
-
-
-
-
+    xbmc.executebuiltin("XBMC.Notification([COLOR red]DELETE ME[/COLOR], [COLOR green] I am not ready yet so you should uninstall me [/COLOR] ,10000)")
 
 
 def Get_Genres():
-    OPEN = Open_Url(BASEURL + 'trending/')
-    Regex2 = re.compile('<a href="https:\/\/gomomovies\.online\/genre(.+?)">(.+?)<\/a>',re.DOTALL).findall(OPEN)
+    OPEN = Open_Url(BASEURL)
+    Regex2 = re.compile('<a class="nav-link" href="(.+?)">(.+?)<\/a>',re.DOTALL).findall(OPEN)
     for url,name in Regex2:
-            name = name.replace('&amp;','&')
-            url = BASEURL + 'genre' + url
-            addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,genreicon + name + '.png',FANART,'')
-#     xbmcplugin.SORT_METHOD_TITLE
+        xbmc.log(url + ' needs to work')
+        name = name.encode('utf8')
+        if 'http' not in url:
+            url = url.replace('/','')
+            url = BASEURL + url
+
+        
+        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,25,ICON,FANART,'','','')
+    xbmcplugin.SORT_METHOD_TITLE
     setView('files', 'menu-view')
 	
 
 def Get_year():
-    OPEN = Open_Url(BASEURL + 'trending/')
-    Regex2 = re.compile('<a href="https:\/\/gomomovies\.online\/release\/(.+?)">(.+?)<\/a>',re.DOTALL).findall(OPEN)
-    for url,name in Regex2:
-            url = BASEURL + 'release' + url
-            addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,ICON,FANART,'')
-#     xbmcplugin.SORT_METHOD_TITLE
+
     setView('files', 'menu-view')
 
 
@@ -84,83 +73,151 @@ def Get_year():
 def Get_content(url):
 
     OPEN = Open_Url(url)
-    if 'movie' in url:
-        Regex = re.compile('<h3><a href=\"(.+?)\">(.+?)</a></h3><span>(.+?)</span>',re.DOTALL).findall(OPEN)
-        Regex2 = re.compile('</span><a href=\"(.+?)\">(.+?)</a></h3><span>(.+?)</span>',re.DOTALL).findall(OPEN)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
 
-        for url,name,year in Regex:
-                icon = ICON
-                items = len(Regex)
-                name1 = name.replace('&#8217;','').replace('&#8230;','…')
-                name = name1 + ' (' + year + ')'
-                if metaset=='true':
-                        try:
-                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
-                        except:
-                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-                else:
-                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
+    mlink = SoupStrainer('figure', {'class':re.compile('fig-box text-left')})
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    for item in items:
+        name1 = item.figcaption.text
+        
         try:
-            np = re.compile("</article></div><div class=\"pagination\"><span>(.+?)</span><a.+?href=\"(.+?)\"><i id='nextpagination'",re.DOTALL).findall(OPEN)
-            for pages,url in np: 
-                pages = pages.replace('</span><span class="current">1','')
-                addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
+            name2 = name1.replace('Movie','[COLOR yellow] Movie[/COLOR]').replace('Episode',' Episode')
         except:
-            np = re.compile("<span>(.+?)</span><a .+?class='arrow_pag' href=\"(.+?)\"><i id='nextpagination'",re.DOTALL).findall(OPEN)
-            for pages,url in np: 
-                addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
-        setView('movies', 'movie-view')
-    else:
-        Regex2 = re.compile('<article id=\"post.+?class=\"item movies\"><div class=\"poster\"><img src=\"(.+?)\".+?<a href=\"(.+?)\"><div .+?href=.+?>(.+?)</a></h3><span>(.+?)</span></div></article>',re.DOTALL).findall(OPEN)
-        for icon,url,name,year in Regex2:
-                items = len(Regex2)
-                name1 = name.replace('&#8217;','').replace('&#8230;','…')
-                name = name1 + ' (' + year + ')'
-                if metaset=='true':
-                        try:
-                                addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
-                        except:
-                                addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-                else:
-                        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-        try:
-            np = re.compile("</article></div><div class=\"pagination\"><span>(.+?)</span><a.+?href=\"(.+?)\"><i id='nextpagination'",re.DOTALL).findall(OPEN)
-            for pages,url in np: 
-                addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
-        except:
-            np = re.compile("<span>(.+?)</span><a .+?class='arrow_pag' href=\"(.+?)\"><i id='nextpagination'",re.DOTALL).findall(OPEN)
-            for pages,url in np: 
-                addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
-        setView('movies', 'movie-view')
-		
-	
+            name2 = name1
+        url1 = item.find('a')['href'].strip()
+        url = url1
+        
+        if 'subbed' in url:
+            name3 = name2 + ' [COLOR blue]SUBBED[/COLOR]'
+        elif 'dubbed' in url:
+            name3 = name2 + ' [COLOR limegreen]DUBBED[/COLOR]'
 
-def get_search(url):
+        name = name3.encode('utf8')
+
+        description3 = item.p.text
+        description = " [COLOR yellow]Posted: " + description3 + "[/COLOR]"
+        try:
+            icon1 = item.find('img')['src'].strip()
+            icon = 'https:' + icon1
+        except:
+            icon = ICON
+
+        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,description,'','')
     
-    OPEN = Open_Url(url)
-    Regex2 = re.compile('<div class=\"thumbnail animation-2\"><a href=\"(.+?)\"><img src=\"(.+?)\" alt="(.+?)" \/><span class=',re.DOTALL).findall(OPEN)
-
-    for url,icon,name in Regex2:
-            items = len(Regex2)
-            name1 = name.replace('&#8217;','').replace('&#8230;','…')
-            name = name1
-            if metaset=='true':
-                    try:
-                            addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
-                    except:
-                            addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-            else:
-                    addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-    try:
-        np = re.compile("</article></div><div class=\"pagination\"><span>(.+?)</span><a.+?href=\"(.+?)\"><i id='nextpagination'",re.DOTALL).findall(OPEN)
-        for pages,url in np: 
-            pages = pages.replace('</span><span class="current">1','')
-            addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
-    except:
-        np = re.compile("<span>(.+?)</span><a .+?class='arrow_pag' href=\"(.+?)\"><i id='nextpagination'",re.DOTALL).findall(OPEN)
-        for pages,url in np: 
-            addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
     setView('movies', 'movie-view')
+		
+
+################################## Get Ongoing Shows ###################################
+
+def Get_ongoing(url):
+
+    OPEN = Open_Url(url)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
+
+    mlink = SoupStrainer('div', {'class':re.compile('pr-2 anime-img-cont position-relative')})
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    for item in items:
+        name1 = item.a.text
+        
+        try:
+            name2 = name1.replace('Movie','[COLOR yellow] Movie[/COLOR]').replace('Episode',' Episode')
+        except:
+            name2 = name1
+        url1 = item.find('a')['href'].strip()
+        url = url1
+        
+        name = name2.encode('utf8')
+        try:
+            icon = item.find('img')['src'].strip()
+        except:
+            icon = ICON
+
+        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,25,icon,FANART,'','','')
+    
+    setView('movies', 'movie-view')
+
+
+################################# Get Episodes ######################################################
+
+def Get_episodes(url):
+
+    OPEN = Open_Url(url)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
+    
+    mlink = SoupStrainer('figure', {'class':re.compile('fig-box text-left')})
+    mlink2 = SoupStrainer('div', {'class':re.compile('w-80 px-sm-2 px-0')})
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    descriptionparse = BeautifulSoup(OPEN, parseOnlyThese=mlink2)
+
+    for item in items:
+        name1 = item.figcaption.text
+        
+        try:
+            name2 = name1.replace('Movie','[COLOR yellow] Movie[/COLOR]').replace('Episode',' Episode')
+        except:
+            name2 = name1
+        url = item.find('a')['href'].strip()
+        if 'subbed' in url:
+            name3 = name2 + ' [COLOR blue]SUBBED[/COLOR]'
+        elif 'dubbed' in url:
+            name3 = name2 + ' [COLOR limegreen]DUBBED[/COLOR]'
+
+        name = name3.encode('utf8')
+        if 'Summary' in str(descriptionparse):
+            description1 = descriptionparse.div.p.text
+            description = description1.encode('utf8')
+        else:
+            description = ''
+
+        tagline = re.compile('<p><b>Title:</b>(.+)</p><p><b>Engli').findall(OPEN)[0]
+        rating = re.compile('<img src="(.+?)" width="100%" style="max-width:').findall(OPEN)[0]
+
+        try:
+            icon1 = item.find('img')['src'].strip()
+            icon = 'https:' + icon1
+        except:
+            icon = ICON
+        FANART = rating
+        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,description,tagline,rating)
+    
+    setView('movies', 'movie-view')
+
+
+################################# Get Search ######################################################
+
+def Get_search(url):
+
+    OPEN = Open_Url(url)
+#     Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
+#     Regex2 = re.compile("<a href=\"(.+?)\".+?>\n.+<img.+?src=\"(.+?)\">\n.+?<h3>(.+?)</h3>\n.+\n\n.+<div class=\"quanlity\">(.+?)</div>",re.DOTALL).findall(OPEN)
+
+    mlink = SoupStrainer('div', {'class':re.compile('w-50 d-inline-block pr-2')})
+    items = BeautifulSoup(OPEN, parseOnlyThese=mlink)
+    for item in items:
+        name1 = item.a.text
+        
+        try:
+            name2 = name1.replace('Movie','[COLOR yellow] Movie[/COLOR]').replace('Episode',' Episode')
+        except:
+            name2 = name1
+        url1 = item.find('a')['href'].strip()
+        url = url1
+        
+
+        name = name2.encode('utf8')
+        try:
+            icon1 = item.find('img')['src'].strip()
+            icon = 'https:' + icon1
+        except:
+            icon = ICON
+
+        addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,25,icon,FANART,'','','')
+    
+    setView('movies', 'movie-view')
+
 
 
 
@@ -169,7 +226,7 @@ def Get_links(name,url):
     Regex = re.compile('style="text-align:center">(.+?)</td>.+?href="(.+?)"',re.DOTALL).findall(OPEN)
     for name2,url in Regex:
             if urlresolver.HostedMediaFile(url):
-                    addDir('[B][COLOR white]%s[/COLOR][/B]' %name2,url,100,iconimage,FANART,name)
+                    addDir('[B][COLOR white]%s[/COLOR][/B]' %name2,url,100,iconimage,FANART,name,'','')
     xbmc.executebuiltin('Container.SetViewMode(50)')
 
 
@@ -178,9 +235,8 @@ def Search():
         keyb.doModal()
         if (keyb.isConfirmed()):
                 search = keyb.getText().replace(' ','+')
-                url = BASEURL + '?s=' + search
-                xbmc.log(url)
-                get_search(url)
+                url = BASEURL + 'search?term=' + search
+                Get_search(url)
     
 
 ########################################
@@ -195,12 +251,12 @@ def Open_Url(url):
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 
-def addDir(name,url,mode,iconimage,fanart,description):
-    u=sys.argv[0]+"?url="+urllib.quote_plus(url)+"&mode="+str(mode)+"&name="+urllib.quote_plus(name)+"&iconimage="+urllib.quote_plus(iconimage)+"&description="+urllib.quote_plus(description)
+def addDir(name,url,mode,iconimage,fanart,description,tagline,rating):
+    u=sys.argv[0]+'?url='+urllib.quote_plus(url)+'&mode='+str(mode)+'&name='+urllib.quote_plus(name)+'&iconimage='+urllib.quote_plus(iconimage)+'&description='+urllib.quote_plus(description)+'&tagline='+urllib.quote_plus(tagline)
     ok=True
     liz=xbmcgui.ListItem(name, iconImage="DefaultFolder.png", thumbnailImage=iconimage)
-    liz.setInfo( type="Video", infoLabels={"Title": name,"Plot":description})
-    liz.setProperty('fanart_image', fanart)
+    liz.setInfo( type="Video", infoLabels={"Title": name,"Tagline": tagline,"fanart_image": rating,"Plot":description})
+    liz.setProperty("fanart_image", rating)
     if mode==100:
         liz.setProperty("IsPlayable","true")
         ok=xbmcplugin.addDirectoryItem(handle=int(sys.argv[1]),url=u,listitem=liz,isFolder=False)
@@ -270,16 +326,41 @@ def resolve(name,url,iconimage,description):
     host = ''
     try:
         OPEN = Open_Url(url)
-        match = re.compile('<iframe class=\"meta.+?\" src=\"(.+?)\" frameborder=\"0\"',re.DOTALL).findall(OPEN)
+        match = re.compile('{"host":"mp4upload","id":"(.+?)","type":"(.+?)","date"',re.DOTALL).findall(OPEN)
+        match2 = re.compile('{"host":"trollvid","id":"(.+?)","type":"(.+?)","date"',re.DOTALL).findall(OPEN)
+        for link,lang in match:
+            if 'subbed' in lang:
+                vidhost = '[COLOR limegreen]' + lang + '[/COLOR]' 
+            if 'dubbed' in lang:
+                vidhost = '[COLOR yellow]' + lang + '[/COLOR]' 
+            link = 'https://mp4upload.com/embed-' + link + '.html'
+            if "http" not in link:
+                    link = 'https:' + link
+            if not 'wholecloud' in link:
+                if not 'vidtodo' in link:
+                    if  urlresolver.HostedMediaFile(link).valid_url():   
+                        label = link.split('//')[1].replace('www.','')
+                        label = label.split('/')[0].split('.')[0].title()
+                        label = label.replace('Tvad','TheVideo')
+                        host = '[B][COLOR white]%s[/COLOR][/B]' %label + ' ' + vidhost
+                        hosts.append(host)
+                        stream_url.append(link)
+        for link,lang in match2:
+            if 'subbed' in lang:
+                vidhost = '[COLOR limegreen]' + lang + '[/COLOR]' 
+            if 'dubbed' in lang:
+                vidhost = '[COLOR yellow]' + lang + '[/COLOR]' 
+            link = 'https://trollvid.net/embed/' + link
+            if not 'wholecloud' in link:
+                if not 'vidtodo' in link:
+                    if  urlresolver.HostedMediaFile(link).valid_url():   
+                        label = link.split('//')[1].replace('www.','')
+                        label = label.split('/')[0].split('.')[0].title()
+                        label = label.replace('Tvad','TheVideo')
+                        host = '[B][COLOR white]%s[/COLOR][/B]' %label + ' ' + vidhost
+                        hosts.append(host)
+                        stream_url.append(link)
 
-        for link in match:
-            if  urlresolver.HostedMediaFile(link).valid_url():   
-                label = link.split('//')[1].replace('www.','')
-                label = label.split('/')[0].split('.')[0].title()
-                label = label.replace('Tvad','TheVideo')
-                host = '[B][COLOR white]%s[/COLOR][/B]' %label
-                hosts.append(host)
-                stream_url.append(link)
         if len(match) >1:
                 dialog = xbmcgui.Dialog()
                 ret = dialog.select('Please Select Host',hosts)
@@ -288,7 +369,14 @@ def resolve(name,url,iconimage,description):
                 elif ret > -1:
                         url = stream_url[ret]
         else:
-            url = re.compile('style="text-align:center">.+?</td>.+?href="(.+?)"').findall(OPEN)[0]
+            try : 
+                url1 = re.compile('{"host":"trollvid","id":"(.+?)","type').findall(OPEN)[0]
+                url = 'https://trollvid.net/embed/' + url1
+            except:
+                url1 = re.compile('{"host":"mp4upload","id":"(.+?)","type').findall(OPEN)[0]
+                url = 'https://mp4upload.com/embed-' + url1 + '.html'
+            
+        
     except:
         xbmc.executebuiltin("XBMC.Notification([COLOR cornflowerblue]Sorry[/COLOR],[COLOR cornflowerblue]No Links Available[/COLOR] ,5000)") 
     try:
@@ -326,6 +414,8 @@ iconimage=None
 mode=None
 fanart=None
 description=None
+tagline=None
+rating=None
 
 
 try:
@@ -352,7 +442,14 @@ try:
         description=urllib.unquote_plus(params["description"])
 except:
         pass
-        
+try:        
+        tagline=urllib.unquote_plus(params["tagline"])
+except:
+        pass
+try:        
+        rating=urllib.unquote_plus(params["rating"])
+except:
+        pass
         
 print str(PATH)+': '+str(VERSION)
 print "Mode: "+str(mode)
@@ -369,7 +466,8 @@ elif mode == 6 : Search()
 elif mode == 10 : Get_links(name,url)
 elif mode == 99 : PT(url)
 elif mode == 100 : resolve(name,url,iconimage,description)
-elif mode == 56 : get_search(url)
+elif mode == 9 : Get_ongoing(url)
+elif mode == 25 : Get_episodes(url)
 elif mode == 0 : uninstall(url)
 
 xbmcplugin.endOfDirectory(int(sys.argv[1]))
