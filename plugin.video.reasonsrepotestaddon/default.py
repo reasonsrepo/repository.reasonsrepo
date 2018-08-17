@@ -33,8 +33,8 @@ def Main_menu():
     addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'','','')
     addDir('[B][COLOR white]Latest Episodes[/COLOR][/B]',BASEURL,5,ICON,FANART,'','','')
     addDir('[B][COLOR white]Ongoing Anime[/COLOR][/B]',BASEURL + 'ongoing-anime',9,ICON,FANART,'','','')
-    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'','')
-    addDir('[B][COLOR white]Random[/COLOR][/B]','url',3,ICON,FANART,'','')
+    addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'','','')
+    addDir('[B][COLOR white]Random[/COLOR][/B]','url',3,ICON,FANART,'','','')
     addDir('[B][COLOR red]Please Uninstall me[/COLOR][/B]','000000',0,ICON,FANART,'','','')
     setView('files', 'menu-view')
 
