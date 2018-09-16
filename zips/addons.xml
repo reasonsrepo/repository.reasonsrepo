@@ -58,6 +58,7 @@ provider-name="Reasons">
        provider-name="humla">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
+        <import addon="repository.reasonsrepo" version="1.0.0"/>
         <import addon="script.module.requests" version="2.7.0" />
     </requires>
     <extension point="xbmc.python.pluginsource"
@@ -124,6 +125,28 @@ provider-name="Reasons">
 	<description lang="en">This is a brand new addon for fmovies.to</description>
 	<disclaimer lang="en">fMovies addon is created by ReasonsRepo, this addon do not host or upload any videos or movies other than indexing them.Therefore, ReasonsRepo is not responsible for the accuracy, compliance, copyright, legality, decency, or any other aspect of the content from the scraped sites.</disclaimer>
   <news>[B]Version 1.0.5 - 27 June 2018[/B] - Added an option to play latest episode (just a temporary fix), also added an option in settings to change site url (currenyly only 2 sites are supported)</news>
+	<platform>all</platform>
+  </extension>
+</addon>
+
+<addon id="plugin.video.reasonshdvix" name="HDVix Movies" version="1.0.0" provider-name="Reasons">
+  <requires>
+    <import addon="xbmc.python" version="2.1.0"/>
+    <import addon="script.module.urlresolver"  version="3.0.0"/>
+    <import addon="script.module.addon.common" />
+    <import addon="script.module.metahandler" version="2.5.1"/>
+    <import addon="repository.reasonsrepo" version="1.0.0"/>
+    <import addon="script.module.requests" version="2.4.3"/>
+    <import addon="script.module.beautifulsoup" version="3.2.1"/>
+    </requires>
+  <extension point="xbmc.python.pluginsource" library="default.py">
+		<provides>video</provides>
+  </extension>
+  <extension point="xbmc.addon.metadata">
+  <summary>HDVix Movies</summary>
+	<description lang="en">This is a brand new addon to watch movies from HDVIX.com</description>
+	<disclaimer lang="en">This addon doesn't host any content, so ReasonsRepository is not responsible for any copyrighted content. So don't sue the developer :P </disclaimer>
+  <news>[B]Version 1.0.0 - 16 Sept 2018[/B] - Initial Release</news>
 	<platform>all</platform>
   </extension>
 </addon>
