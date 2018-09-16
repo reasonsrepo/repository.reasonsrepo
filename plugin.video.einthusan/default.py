@@ -107,10 +107,13 @@ def get_movies_and_music_videos_helper(name, url, language, mode, page):
                 movie = movie+'itsnothd,'+referurl
             if 'youtube' in trailer: trail = trailer.split('watch?v=')[1].split('">')[0]
             else: trail=None
-            if 'synopsis' in synopsis:
-                description = re.compile('<p class="synopsis">(.+?)</p>').findall(synopsis)[0]
-            else:
-                description = ''
+            try:
+                if 'synopsis' in synopsis:
+                    description = str(re.compile('<p class="synopsis">(.+?)</p>').findall(synopsis)[0])
+                else:
+                    description = ''
+            except:
+                description=""
             
         # addDir(name, MOVIES_URL + str(movie)+'/?lang='+lang, 2, image, lang)
         addDir(name,movie,2,image,lang,description, isplayable=True)
