@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.einthusan"
        name="Einthusan"
-       version="1.4.2"
-       provider-name="humla">
+       version="1.4.3"
+       provider-name="humla,ReasonsRepo">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.7.0" />
@@ -15,8 +15,11 @@
         <platform>all</platform>
         <summary>Watch Hindi, Tamil  movies</summary>
         <description>This XBMC plugin allows to watch Hindi and Tamil movies from Einthusan.com. Please support them.
-        Movie list, years list, recently posted, featured movies, movie posters fixed by [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR].
-        Also added Movie description by [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR].
+        Fixed everything, the addon should be working fine now [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR].
+        
+        Credits to Humla for creating the addon, but he probably stopped supporting it, so I, [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR] am taking over this project.
+        I don't watch bollywood movies so dont use this addon, so if it breaks then please let me know.
+        My contact info is available on my website or my github Repository.
         Credits to suriya222 for the thumbnails.</description>
     </extension>
 </addon>

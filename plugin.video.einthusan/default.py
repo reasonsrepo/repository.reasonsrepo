@@ -91,27 +91,29 @@ def get_movies_and_music_videos_helper(name, url, language, mode, page):
     referurl = url
     html =  requests.get(url).text
     # match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src="(.*?)".*?<h3>(.*?)</h3>.+?i class(.+?)<p').findall(html)
-    match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?data-src="(.+?)".*?<h3>(.*?)</h3>.+?i class(.+?)<p(.+?)<span>Wiki</span>(.+?)</div>').findall(html)
+    match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?<img src="(.+?)".+?<h3>(.+?)<\/h3>.+?i class(.+?)<p class="synopsis">(.+?)<\/p>.+?<span>Wiki<').findall(html)
     nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
 
     # Bit of a hack
     MOVIES_URL = "http://www.einthusan.tv/movies/watch/"
-    for movie, lang, image, name, ishd, synopsis, trailer in match:
+    for movie, lang, image, name, ishd, synopsis in match:
         if (mode == 1):
-            image = 'http:' + image
+            if 'http' not in image:
+                image = 'http:' + image
+            else:
+                image = image
+            trailer = ''
+            name = str(name.replace(",","").encode('ascii', 'ignore').decode('ascii'))
             movie = str(name)+','+str(movie)+','+lang+','
             if 'ultrahd' in ishd:
-                name = name + '[COLOR blue]- Ultra HD[/COLOR]'
+                name = str(name + '[COLOR blue]- Ultra HD[/COLOR]')
                 movie = movie+'itshd,'+referurl
             else:
                 movie = movie+'itsnothd,'+referurl
             if 'youtube' in trailer: trail = trailer.split('watch?v=')[1].split('">')[0]
             else: trail=None
             try:
-                if 'synopsis' in synopsis:
-                    description = str(re.compile('<p class="synopsis">(.+?)</p>').findall(synopsis)[0])
-                else:
-                    description = ''
+                description = synopsis.encode('ascii', 'ignore').decode('ascii')
             except:
                 description=""
             
@@ -201,21 +203,25 @@ def show_featured_movies(name, url, language, mode):
     page_url = 'https://einthusan.tv/movie/browse/?lang=' + language
 
     html = requests.get(page_url).text
-    matches = re.compile('name="newrelease_tab".+?img src=".+?" data-src="(.+?)".+?href="(.+?)"><h2>(.+?)</h2>.+?i class=(.+?)</div>').findall(html)
+    matches = re.compile('name="newrelease_tab".+?img src="(.+?)".+?href="(.+?)"><h2>(.+?)<\/h2>.+?i class=(.+?)<\/div>').findall(html)
 
-    staffPicks_matches = re.compile('  <i class="(.+?)">.+?</i>.+?</i>Subtitle</p></div><a href="(.+?)"><img.+data-src="(.+?)".+> </a><a href=".+?" class="title">(.+?)</a>').findall(html)
+    staffPicks_matches = re.compile('<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><a href="(.+?)">.+?<img src="(.+?)"> <\/a><a href=".+?" class="title">(.+?)<\/a>').findall(html)
     staffPicks_matches = staffPicks_matches[:10]
 
     allmatches = []
     for img, id, name, ishd in matches:
+        img = "https:" + img
+
+        name = name.replace(",","").encode('ascii', 'ignore').decode('ascii')
         allmatches.append((img,id,name,ishd))
     for ishd, link, image, name in staffPicks_matches:
         allmatches.append((image, link, name, ishd))
 
     for img, id, name, ishd in allmatches:
-        print id 
-        movieid = id.split('/')[3]
-        movielang= id.split('lang=')[1]
+        print id
+    
+        movieid = id.split('/')[2]
+        movielang= id.split('lang=')[0]
         movie = name+','+movieid+','+movielang
         if 'ultrahd' in ishd:
             title=name + '[COLOR blue]- Ultra HD[/COLOR]'
@@ -224,7 +230,13 @@ def show_featured_movies(name, url, language, mode):
             title=name
             movie = movie+',itsnothd,'+page_url
         link = 'http://www.einthusan.tv'+str(id)
-        image = 'http:'+img
+        
+        image = img
+        if 'http' not in image:
+            image = 'https:' + img
+        else:
+            image = img
+        xbmc.log(image + " " + name)
 
         addDir(title, movie, 2, image, language, isplayable=True)
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -294,10 +306,11 @@ def show_search_box(name, url, language, mode):
         postData = 'https://einthusan.tv/movie/results/?'+url+'&query=' + search_term
         headers={'Origin':'https://einthusan.tv','Referer':'https://einthusan.tv/movie/browse/?'+url,'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
         html = requests.get(postData, headers=headers).text
-        match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src=".+?" data-src="(.+?)".+?<h3>(.*?)</h3>.+?i class(.+?)<p').findall(html)
+        match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src="(.+?)".+?<h3>(.*?)<\/h3>.+?i class(.+?)<p').findall(html)
         nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
 
         for movie, lang, image, name, ishd in match:
+            name = name.replace(",","").encode('ascii', 'ignore').decode('ascii')
             image = 'http:' + image
             movie = str(name)+','+str(movie)+','+lang+','
             if 'ultrahd' in ishd:
@@ -345,12 +358,11 @@ def encodeEInth(lnk):
 ##
 def play_video(name, url, language, mode):
     
-    s = requests.Session()
-    
+    s = requests.Session()    
     # "Playing: " + name + ", with url:"+ url)
     
-    name,url,lang,isithd,referurl=url.split(',')
-    
+    name,url,lang,isithd,referur=url.split(',')
+
     if isithd=='itshd':
         dialog = xbmcgui.Dialog()
         ret = dialog.select('Quality Options', ['Play UHD', 'Play HD/SD'])
