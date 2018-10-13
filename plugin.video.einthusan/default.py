@@ -361,7 +361,7 @@ def play_video(name, url, language, mode):
     s = requests.Session()    
     # "Playing: " + name + ", with url:"+ url)
     
-    name,url,lang,isithd,referur=url.split(',')
+    name,url,lang,isithd,referurl=url.split(',')
 
     if isithd=='itshd':
         dialog = xbmcgui.Dialog()
