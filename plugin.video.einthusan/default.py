@@ -93,7 +93,7 @@ def get_movies_and_music_videos_helper(name, url, language, mode, page):
     # match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src="(.*?)".*?<h3>(.*?)</h3>.+?i class(.+?)<p').findall(html)
     match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?<img src="(.+?)".+?<h3>(.+?)<\/h3>.+?i class(.+?)<p class="synopsis">(.+?)<\/p>.+?<span>Wiki<').findall(html)
     nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
-
+    print("I was here")
     # Bit of a hack
     MOVIES_URL = "http://www.einthusan.tv/movies/watch/"
     for movie, lang, image, name, ishd, synopsis in match:
@@ -203,25 +203,27 @@ def show_featured_movies(name, url, language, mode):
     page_url = 'https://einthusan.tv/movie/browse/?lang=' + language
 
     html = requests.get(page_url).text
-    matches = re.compile('name="newrelease_tab".+?img src="(.+?)".+?href="(.+?)"><h2>(.+?)<\/h2>.+?i class=(.+?)<\/div>').findall(html)
+    matches = re.compile('name="newrelease_tab".+?img src="(.+?)".+?href="\/movie\/watch\/(.+?)\/\?lang=(.+?)"><h2>(.+?)<\/h2>.+?i class=(.+?)<\/div>').findall(html)
 
-    staffPicks_matches = re.compile('<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><a href="(.+?)">.+?<img src="(.+?)"> <\/a><a href=".+?" class="title">(.+?)<\/a>').findall(html)
+    staffPicks_matches = re.compile('<a class="title" href="\/movie\/watch\/(.+?)\/\?lang=.+?"><h3>(.+?)<\/h3><\/a><div class="info">.+?<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><p class="synopsis">(.+?)<\/p><div class="professionals">  <input type=.+?<img src="(.+?)"><\/div>').findall(html)
     staffPicks_matches = staffPicks_matches[:10]
-
+    print("it works")
     allmatches = []
-    for img, id, name, ishd in matches:
+    for img, id,lang, name, ishd in matches:
+        img = img.replace('"><img src="','')
         img = "https:" + img
 
         name = name.replace(",","").encode('ascii', 'ignore').decode('ascii')
         allmatches.append((img,id,name,ishd))
-    for ishd, link, image, name in staffPicks_matches:
+    for link,name,ishd,image,ishd in staffPicks_matches:
         allmatches.append((image, link, name, ishd))
 
     for img, id, name, ishd in allmatches:
-        print id
-    
-        movieid = id.split('/')[2]
-        movielang= id.split('lang=')[0]
+        print ("this is id" + id)
+        movieid = id
+        print(movieid)
+        movielang= lang
+        print(movielang + "this is lang")
         movie = name+','+movieid+','+movielang
         if 'ultrahd' in ishd:
             title=name + '[COLOR blue]- Ultra HD[/COLOR]'
@@ -359,7 +361,7 @@ def encodeEInth(lnk):
 def play_video(name, url, language, mode):
     
     s = requests.Session()    
-    # "Playing: " + name + ", with url:"+ url)
+    print("Playing: " + name + ", with url:"+ url)
     
     name,url,lang,isithd,referur=url.split(',')
 
@@ -372,12 +374,13 @@ def play_video(name, url, language, mode):
             headers={'Origin':'https://einthusan.tv','Referer':'https://einthusan.tv/movie/browse/?lang=hindi','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
             mainurl='https://einthusan.tv/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
             mainurlajax='https://einthusan.tv/ajax/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
-            login_info(s, referurl)
+            login_info(s, referur)
             get_movie(s,mainurl,mainurlajax, headers)
         if ret ==1:
             # isithd = 'itsnothd'
             mainurl='https://einthusan.tv/movie/watch/%s/?lang=%s'%(url,lang)
             mainurlajax='https://einthusan.tv/ajax/movie/watch/%s/?lang=%s'%(url,lang)
+            print(mainurlajax)
             headers={'Origin':'https://einthusan.tv','Referer':'https://einthusan.tv/movie/browse/?lang=hindi','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
             get_movie(s,mainurl,mainurlajax, headers)
             

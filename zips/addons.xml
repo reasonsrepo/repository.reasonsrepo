@@ -54,7 +54,7 @@ provider-name="Reasons">
 
 <addon id="plugin.video.einthusan"
        name="Einthusan"
-       version="1.4.3"
+       version="1.4.4"
        provider-name="humla,ReasonsRepo">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
