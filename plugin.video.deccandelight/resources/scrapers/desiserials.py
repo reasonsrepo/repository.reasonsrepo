@@ -21,7 +21,7 @@ import urllib, re, requests
 import HTMLParser
 import xbmcgui
 
-class badtameezdil(Scraper):
+class desiserials(Scraper):
     def __init__(self):
         Scraper.__init__(self)
         self.bu = 'http://www.desi-serials.org/'

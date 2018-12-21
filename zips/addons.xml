@@ -53,7 +53,7 @@ provider-name="Reasons">
 </addon>
 
 <addon id="plugin.video.deccandelight"
-version="1.7.0"
+version="1.7.1"
 name="Deccan Delight"
 provider-name="gujal">
 <requires>
@@ -78,12 +78,9 @@ DeccanDelight and its developers [B]DO NOT[/B] host, create, or distribute any o
 	<website>https://github.com/Gujal00/GujalKodiWork</website>
 	<disclaimer>DeccanDelight and its developers are not in any way affiliated with Kodi or any of the sites and providers used in the addon.</disclaimer>
 	<news>
-[B]Version 1.6.8 - 20 Aug 2018[/B]
- - Desitashan fix
- - Hindi Geetmala fix
- - Teluguflame fix
- - Mana Telugu fix
- - Tamil Gun fix
+[B]Version 1.7.1 - 21st Dec 2018[/B]
+ - [COLOR blue]Reasons[/COLOR] [COLOR yellow]Repository[/COLOR]
+ - Added Desi Serials
 	</news>
 	<assets>
 		<icon>icon.png</icon>
