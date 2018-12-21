@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+    <category label="Tamil Scrapers">
+        <setting id="rajt" type="bool" label="Raj Tamil" default="true"/>
+        <setting id="tgun" type="bool" label="Tamil Gun" default="true"/>
+        <setting id="rasigan" type="bool" label="Tamil Rasigan" default="true"/>
+		<setting id="bbt" type="bool" label="BigBoss Tamil" default="true"/>
+		<setting id="tdhool" type="bool" label="Tamil Dhool" default="true"/>
+		<setting id="tst247" type="bool" label="Tamil Serial Today" default="true"/>
+		<setting id="tstv" type="bool" label="Tamil Serials" default="true"/>
+        <setting id="ttvs" type="bool" label="Tamil TV Shows" default="true"/>
+        <setting id="tyogi" type="bool" label="Tamil Yogi" default="true"/>
+    </category>
+    <category label="Telugu Scrapers">
+        <setting id="awatch" type="bool" label="Andhra Watch" default="true"/>
+		<setting id="manatv" type="bool" label="Mana Telugu TV" default="true"/>
+		<setting id="tflame" type="bool" label="Telugu Flame" default="true"/>
+    </category> 
+    <category label="Malayalam Scrapers">
+        <setting id="olangal" type="bool" label="Olangal" default="true"/>
+        <setting id="torm" type="bool" label="TOR Malayalam" default="true"/>
+    </category> 
+    <category label="Hindi Scrapers">
+        <setting id="desit" type="bool" label="Desi Tashan" default="true"/>
+        <setting id="hlinks" type="bool" label="Hindi Links 4 U" default="true"/>
+        <setting id="gmala" type="bool" label="Hindi Geetmala" default="true"/>
+		<setting id="desiserials" type="bool" label="Desi Serials" default="true"/>
+        <setting id="yodesi" type="bool" label="Yo Desi" default="true"/>
+    </category>
+    <category label="Multi Language Scrapers">
+        <setting id="bmov" type="bool" label="Bharat Movies" default="true"/>
+        <setting id="flinks" type="bool" label="Film Links 4 U" default="true"/>
+        <setting id="i4movie" type="bool" label="India 4 Movie" default="true"/>
+        <setting id="mersal" type="bool" label="Mersalaayitten" default="true"/>
+        <setting id="mersalhd" type="bool" label="Play HD if available" visible="eq(-1,true)" enable="!eq(-1,)" default="true" subsetting="true"/>
+        <setting id="mfish" type="bool" label="Movie Fisher" default="true"/>
+        <setting id="moviefk" type="bool" label="Movie FK" default="true"/>
+        <setting id="mrulz" type="bool" label="Movie Rulez" default="true"/>
+        <setting id="ozee" type="bool" label="OZee" default="true"/>
+        <setting id="tvcd" type="bool" label="Thiruttu VCD" default="true"/>
+        <setting id="tvcds" type="bool" label="Thiruttu VCDs" default="true"/>
+        <setting id="tmvp" type="bool" label="TMVPlay" default="true"/>
+		<setting id="wompk" type="bool" label="Online Movies PK" default="true"/>
+    </category>
+    <category label="Live TV Scrapers">
+        <setting id="aindia" type="bool" label="Abroad India" default="true"/>
+		<setting id="lyca" type="bool" label="Lyca TV Music" default="true"/>
+        <setting id="tamiltv" type="bool" label="APK Land" default="true"/>
+		<setting id="hyfy" type="bool" label="HyFy TV" default="true"/>
+        <setting id="mhdtv" type="bool" label="MHDTV Live" default="true"/>
+		<setting id="mhdusr" type="text" label="Username" visible="eq(-1,true)" enable="!eq(-1,)" default="mhdtvlive" subsetting="true"/>
+		<setting id="mhdpwd" type="text" option="hidden" label="Password" visible="eq(-2,true)" enable="!eq(-1,)" default="mhdtvlive" subsetting="true"/>
+        <setting id="nextv" type="bool" label="NexTV" default="true"/>
+		<setting id="thop" type="bool" label="THOP TV" default="true"/>
+        <setting id="thopqual" type="enum" label="THOP Video quality (where applicable)" values="Low (180p)|Med (360p)|Default (480p)|Good (576p)|High (720p)" visible="eq(-1,true)" enable="!eq(-1,)" default="2" subsetting="true"/>
+    </category>
+    <category label="Download">
+        <setting id="dlfolder" type="folder" label="Download Folder" default=""/>
+    </category> 
+    <category label="Miscellaneous">
+        <setting label="Cache Timeout in hours" type="number" id="timeout" default="6"/> 
+        <setting label="Mature Content" type="lsep"/>
+        <setting label="Enable Mature content" type="bool" id="adult" default="false"/>
+    </category>    
+</settings>
