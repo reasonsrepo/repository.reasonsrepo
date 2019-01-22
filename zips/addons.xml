@@ -94,11 +94,12 @@ DeccanDelight and its developers [B]DO NOT[/B] host, create, or distribute any o
 
 <addon id="plugin.video.einthusan"
        name="Einthusan"
-       version="1.4.4"
+       version="1.4.5"
        provider-name="humla,ReasonsRepo">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
         <import addon="script.module.requests" version="2.7.0" />
+        <import addon="repository.reasonsrepo" version="1.0.0"/>
     </requires>
     <extension point="xbmc.python.pluginsource"
                library="default.py">
@@ -118,7 +119,7 @@ DeccanDelight and its developers [B]DO NOT[/B] host, create, or distribute any o
 </addon>
 
 <addon id="plugin.video.movierulz"
-version="0.1.0"
+version="0.1.1"
 name="Movie Rulz"
 provider-name="Reasons">
 <requires>
