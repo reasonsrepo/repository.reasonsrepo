@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.movierulz"
-version="0.1.0"
+version="0.1.1"
 name="Movie Rulz"
 provider-name="Reasons">
 <requires>
@@ -20,7 +20,7 @@ provider-name="Reasons">
   <summary>Movie Rulz</summary>
   <description>Movie Rulz is a popular site to watch English and Hindi Movies for free</description>
   <disclaimer>This addon searches movierulz.pe to find movie link. The addon itself doesn't host any content. For now, we have no plan on adding Telegue or other language links in this addon.</disclaimer>
-	<news>[B]Version 0.1.0 - 17th May 2018[/B] - Initial Release</news>
+	<news>[B]Version 0.1.0 - 11th May 2018[/B] - Initial Release</news>
 	<assets>
 		<icon>icon.png</icon>
 		<fanart>fanart.jpg</fanart>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.movierulz"
-version="0.1.0"
+version="0.1.1"
 name="Movie Rulz"
 provider-name="Reasons">
 <requires>

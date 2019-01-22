@@ -1,6 +1,6 @@
 """
     WatchOnlineMovies Kodi Addon
-    Copyright (C) 2018 Milo
+    Copyright (C) 2019 ReasonsRepo
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -382,22 +382,18 @@ def get_categories():
     Get the list of categories.
     :return: list
     """
-    bu = 'https://movierulz.pe'
+    bu = 'https://2movierulz.tv'
     r = requests.get(bu, headers=mozhdr)
     if r.url != bu:
         bu = r.url
     items = {}
-    cats = re.findall('	<li id="menu-item-.*?" .*?"><a title="Bollywood Movie .*?" href="(.*?)">(.*?)<\/a><\/li>',r.text)
+    cats = re.findall('<li id="menu-item-.*?" .*?"><a title=".+?Movie .*?" href="(.*?)">(.*?)<\/a><\/li>',r.text)
     # cats = re.findall('class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-[^4]*? href="((?=.*category).*?)">((?![^a-zA-Z]).*?)<',r.text) more ui items
     sno = 1
     for cat in cats:
         items[str(sno)+cat[1]] = cat[0]
         sno+=1
-    items[str(sno)+'[COLOR blue]Hollywood Movie 2017[/COLOR]'] = bu + '/category/hollywood-movie-2017/'
-    items[str(sno)+'[COLOR blue]Hollywood Movie 2016[/COLOR]'] = bu + '/category/hollywood-movie-2016/'
-    items[str(sno)+'[COLOR blue]Hollywood Movie 2018[/COLOR]'] = bu + '/category/hollywood-movie-2018/'
-    # items[str(sno)+'[COLOR blue]Comedy Movies[/COLOR]'] = bu + 'category/indian-movies/funny-movies/'
-    # items[str(sno)+'[COLOR blue]Romantic Movies[/COLOR]'] = bu + 'category/romantic-movies/'
+
     items[str(sno)+'[COLOR yellow]** Search **[/COLOR]'] = bu + '/?s='
     
     return items
