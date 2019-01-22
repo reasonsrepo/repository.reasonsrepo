@@ -1,4 +1,6 @@
 # Einthusan.com plugin written by humla.
+# Einthusan.tv Plugin maintained by ReasonsRepo
+
 
 import os
 import re
@@ -339,9 +341,12 @@ def list_music_videos(name, url, language, mode):
 def http_request_with_login(url):
     username = xbmcplugin.getSetting(int(sys.argv[1]), 'username')
     password = xbmcplugin.getSetting(int(sys.argv[1]), 'password')
+    xbmc.log(username)
+    xbmc.log(password)
 
     ADDON_USERDATA_FOLDER = xbmc.translatePath(ADDON.getAddonInfo('profile'))
     COOKIE_FILE = os.path.join(ADDON_USERDATA_FOLDER, 'cookies')
+    
     return HTTPInterface.http_get(url, COOKIE_FILE,username, password)
 
 def decodeEInth(lnk):
@@ -363,7 +368,7 @@ def play_video(name, url, language, mode):
     s = requests.Session()    
     print("Playing: " + name + ", with url:"+ url)
     
-    name,url,lang,isithd,referur=url.split(',')
+    name,url,lang,isithd,referurl=url.split(',')
 
     if isithd=='itshd':
         dialog = xbmcgui.Dialog()
@@ -374,7 +379,7 @@ def play_video(name, url, language, mode):
             headers={'Origin':'https://einthusan.tv','Referer':'https://einthusan.tv/movie/browse/?lang=hindi','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
             mainurl='https://einthusan.tv/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
             mainurlajax='https://einthusan.tv/ajax/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
-            login_info(s, referur)
+            login_info(s, referurl)
             get_movie(s,mainurl,mainurlajax, headers)
         if ret ==1:
             # isithd = 'itsnothd'
@@ -477,6 +482,7 @@ def login_info(s, referurl):
     if '&#43;' in csrf: csrf = csrf.replace('&#43;', '+')
     
     body = {'xEvent':'Login','xJson':'{"Email":"'+username+'","Password":"'+password+'"}', 'arcVersion':3, 'appVersion':59,'tabID':csrf+'48','gorilla.csrf.Token':csrf}
+    xbmc.log(body)
     headers['X-Requested-With']='XMLHttpRequest'
     
     
