@@ -32,8 +32,8 @@ metaget = metahandlers.MetaData()
 
 def Main_menu():
     addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL,5,ICON,FANART,'')
-    addDir('[B][COLOR white]Hollywood Movies[/COLOR][/B]',BASEURL + 'category/hollywood-movies/2018-movies-hollywood/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]HINDI Movies[/COLOR][/B]',BASEURL + 'category/indian-movies/2018-full-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Hollywood Movies[/COLOR][/B]',BASEURL + 'category/hollywood-movies/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Bollywood Movies[/COLOR][/B]',BASEURL + 'category/indian-movies',5,ICON,FANART,'')
     addDir('[B][COLOR white]Categories[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Year[/COLOR][/B]','',33,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
@@ -49,6 +49,7 @@ def Get_Genres():
 	
 
 def Get_year():
+    addDir('[B][COLOR white]2019 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2019-full-movies/',5,ICON,FANART,'')
     addDir('[B][COLOR white]2018 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2018-full-movies/',5,ICON,FANART,'')
     addDir('[B][COLOR white]2017 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2017-full-movies/',5,ICON,FANART,'')
     addDir('[B][COLOR white]2016 Movies[/COLOR][/B]','http://www.watchonlinemovies.com.pk/category/indian-movies/2016-movies/',5,ICON,FANART,'')
@@ -185,8 +186,8 @@ def addDir2(name,url,mode,iconimage,itemcount):
             simpleyear=splitName[2].partition(')')
         if len(simpleyear)>0:
             simpleyear=simpleyear[0]
-	    mg = eval(base64.b64decode('bWV0YWhhbmRsZXJzLk1ldGFEYXRhKHRtZGJfYXBpX2tleT0iMzZjMWM1OWYwNTI0YTYzZTc3MmI5MGMzNzc4ZmIwOTciKQ=='))
-	    meta = mg.get_meta('movie', name=simplename ,year=simpleyear)
+            mg = eval(base64.b64decode('bWV0YWhhbmRsZXJzLk1ldGFEYXRhKHRtZGJfYXBpX2tleT0iMzZjMWM1OWYwNTI0YTYzZTc3MmI5MGMzNzc4ZmIwOTciKQ=='))
+            meta = mg.get_meta('movie', name=simplename ,year=simpleyear)
         if meta['cover_url']=='':
             try:
                 meta['cover_url']=iconimage
@@ -236,11 +237,13 @@ def resolve(name,url,iconimage,description):
     stream_url = []
     host = ''
     try:
-        OPEN = Open_Url(url)
-        match = re.compile('<iframe src="(.+?)"',re.DOTALL).findall(OPEN)
-        match2 = re.compile('<IFRAME SRC="(.+?)"',re.DOTALL).findall(OPEN)
+        OPEN = Open_Url(url).lower()
+        match = re.compile('<iframe src=(.+?) scrolling=n',re.DOTALL).findall(OPEN)
+        match2 = re.compile('<iframe src="(.+?)"',re.DOTALL).findall(OPEN)
+        match3 = re.compile('<iframe width=.*?src=(.+?) frameborder',re.DOTALL).findall(OPEN)
 
         for link in match:
+            xbmc.log(link)
             if  urlresolver.HostedMediaFile(link).valid_url():   
                 label = link.split('//')[1].replace('www.','')
                 label = label.split('/')[0].split('.')[0].title()
@@ -249,6 +252,16 @@ def resolve(name,url,iconimage,description):
                 hosts.append(host)
                 stream_url.append(link)
         for link in match2:
+                xbmc.log(link)
+                if  urlresolver.HostedMediaFile(link).valid_url():   
+                    label = link.split('//')[1].replace('www.','')
+                    label = label.split('/')[0].split('.')[0].title()
+                    label = label.replace('Tvad','TheVideo')
+                    host = '[B][COLOR white]%s[/COLOR][/B]' %label
+                    hosts.append(host)
+                    stream_url.append(link)
+        for link in match3:
+                xbmc.log(link)
                 if  urlresolver.HostedMediaFile(link).valid_url():   
                     label = link.split('//')[1].replace('www.','')
                     label = label.split('/')[0].split('.')[0].title()
@@ -257,6 +270,20 @@ def resolve(name,url,iconimage,description):
                     hosts.append(host)
                     stream_url.append(link)
         if len(match) >1:
+                dialog = xbmcgui.Dialog()
+                ret = dialog.select('Please Select Host',hosts)
+                if ret == -1:
+                    return
+                elif ret > -1:
+                        url = stream_url[ret]
+        elif len(match2) > 1:
+                dialog = xbmcgui.Dialog()
+                ret = dialog.select('Please Select Host',hosts)
+                if ret == -1:
+                    return
+                elif ret > -1:
+                        url = stream_url[ret]
+        elif len(match3) > 1:
                 dialog = xbmcgui.Dialog()
                 ret = dialog.select('Please Select Host',hosts)
                 if ret == -1:

@@ -216,7 +216,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.uwatchfree" name="UwatchFree" version="1.0.10" provider-name="Reasons">
+<addon id="plugin.video.uwatchfree" name="UwatchFree" version="2.0.0" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
@@ -231,7 +231,7 @@ provider-name="Reasons">
 	<summary lang="en">Movies and Tv Shows from uwatchfree</summary>
 	<description lang="en">This addon was originally developed DandyMedia, and please read the disclaimer</description>
 	<disclaimer lang="en">UwatchFree addon is a web scraper coded to crawl and index uwatchfree.tv. This addon doesn't host any content therefore ReasonsRepo is not responsible for the accuracy, compliance, copyright, legality, decency, or any other aspect of the content from the scraped sites.</disclaimer>
-  <news>[B]Version 1.0.10 - 23 June 2018[/B] - Fixed No links issue, Added page count, Removed Dandymedia's name due to his request. </news>
+  <news>[B]Version 2.0.0 - 24 April 2019[/B] - Slowly fixing it</news>
 	<platform>all</platform>
   </extension>
 </addon>
@@ -297,7 +297,7 @@ provider-name="Reasons">
   </extension>
 </addon>
 
-<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.4" provider-name="Reasons">
+<addon id="plugin.video.watchonlinemovies-New" name="WatchOnlineMovies-New" version="1.0.5" provider-name="Reasons">
   <requires>
     <import addon="xbmc.python" version="2.1.0"/>
     <import addon="script.module.urlresolver"  version="3.0.0"/>
@@ -314,7 +314,7 @@ provider-name="Reasons">
   <summary>WatchOnlineMovies-New</summary>
 	<description lang="en">This is a brand new addon for watchonlinemovies.com.pk</description>
 	<disclaimer lang="en">This addon doesn't host any content, so ReasonsRepository is not responsible for any copyrighted content. So don't sue the developer :P </disclaimer>
-  <news>[B]Version 1.0.4 - 20 July 2018[/B] - [COLOR yellow] Fixed video playback issues/Disabled language selection[/COLOR]</news>
+  <news>[B]Version 1.0.5 - 24 April 2019[/B] - [COLOR yellow] Fixed no links bug[/COLOR]</news>
 	<platform>all</platform>
   </extension>
 </addon>

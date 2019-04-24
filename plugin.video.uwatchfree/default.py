@@ -14,24 +14,23 @@ FANART = ADDON.getAddonInfo('fanart')
 PATH = 'uwatchfree'
 VERSION = ADDON.getAddonInfo('version')
 ART = ADDON_PATH + "/resources/icons/"
-BASEURL = 'https://www1.uwatchfree.tv/'
+BASEURL = 'https://www.uwatchfree.sx/'
 metaset = selfAddon.getSetting('enable_meta')
 metaget = metahandlers.MetaData()
 
 def Main_menu():
-    addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL + 'category/featured-movies/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Hollywood Movies[/COLOR][/B]','https://www1.uwatchfree.tv/category/hollywood/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]HD Movies[/COLOR][/B]',BASEURL + 'category/hd-movies/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]Documentaries [/COLOR][/B]',BASEURL + 'category/documentaries/',5,ICON,FANART,'')
-    addDir('[B][COLOR white]TV Shows[/COLOR][/B]',BASEURL + 'category/tv-shows/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Featured Movies[/COLOR][/B]',BASEURL + 'category/featured/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]Hollywood Movies[/COLOR][/B]','https://www.uwatchfree.sx/category/hollywood/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]HD Movies[/COLOR][/B]',BASEURL + 'category/hd/',5,ICON,FANART,'')
+    addDir('[B][COLOR white]TV Shows[/COLOR][/B]',BASEURL + 'category/tv-series/',5,ICON,FANART,'')
     addDir('[B][COLOR white]Genres[/COLOR][/B]','',3,ICON,FANART,'')
     addDir('[B][COLOR white]Search[/COLOR][/B]','url',6,ICON,FANART,'')
     setView('tvshows', 'List')
 
 def Get_Genres():
-    OPEN = Open_Url('https://www1.uwatchfree.tv/genres/')
+    OPEN = Open_Url('https://www.uwatchfree.sx/genres/')
     Regex = re.compile('<ul class="bycategories">(.+?)</ul>',re.DOTALL).findall(OPEN)
-    Regex2 = re.compile('<li><a href="(.+?)">(.+?)</a></li>',re.DOTALL).findall(str(Regex))
+    Regex2 = re.compile('<li><a href=(.+?)>(.+?)<\/a><\/li>',re.DOTALL).findall(str(Regex))
     for url,name in Regex2:
             addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,5,ICON,FANART,'')
     setView('tvshows', 'default-view')
@@ -39,9 +38,9 @@ def Get_Genres():
 def Get_content(url):
 
     OPEN = Open_Url(url)
-    Regex = re.compile('role="main">(.+?)role="navigation" ',re.DOTALL).findall(OPEN)
-    Regex2 = re.compile('<figure class="visual-thumbnail"><a href="(.+?)"><img src="(.+?)".+?title="(.+?)"',re.DOTALL).findall(str(Regex))
-    for url,icon,name in Regex2:
+    Regex = re.compile('role=main>(.+?)role=navigation',re.DOTALL).findall(OPEN)
+    Regex2 = re.compile('<a href=(.+?) title=.+?rel=bookmark>(.+?)<\/a><\/h2><\/header><figure class=visual-thumbnail>.+?<img src=(.+?) alt',re.DOTALL).findall(str(Regex))
+    for url,name,icon in Regex2:
             items = len(Regex)
             name = name.replace('&#8217;','').replace('Watch ','').replace('#038;','').replace(' Online','')
             try:
@@ -49,10 +48,10 @@ def Get_content(url):
                     addDir2('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,items)
             except:
                 addDir('[B][COLOR white]%s[/COLOR][/B]' %name,url,100,icon,FANART,'')
-    np = re.compile('<li><a href="(.+?)">(.+?)</a></li>',re.DOTALL).findall(OPEN)
+    np = re.compile('<li><a href=(.+?)>(.+?)<\/a><\/li>',re.DOTALL).findall(OPEN)
     for url,name in np:
             if '>>' in name:
-                    allpages = re.compile('<ul><li class="page_info">(.+?)<',re.DOTALL).findall(OPEN)
+                    allpages = re.compile('<ul><li class=page_info>(.+?)<',re.DOTALL).findall(OPEN)
                     for pages in allpages:    
                         addDir('[B][COLOR blue]Next Page >>>[/COLOR][/B] ' + ' [COLOR yellow]Currently in ' + pages + '[/COLOR]',url,5,ART + 'nextpage.jpg',FANART,'')
                 #     addDir('[B][COLOR blue]Next Page>>>[/COLOR][/B]',url,5,ART + 'nextpage.jpg',FANART,'')
@@ -60,9 +59,10 @@ def Get_content(url):
 		
 	
 def Get_links(name,url):
+    name2 = "megavideo"
     OPEN = Open_Url(url)
-    Regex = re.compile('style="text-align:center">(.+?)</td>.+?href="(.+?)"',re.DOTALL).findall(OPEN)
-    for name2,url in Regex:
+    Regex = re.compile('<iframe src=(.+?) w',re.DOTALL).findall(OPEN)
+    for url in Regex:
             if urlresolver.HostedMediaFile(url):
                     addDir('[B][COLOR white]%s[/COLOR][/B]' %name2,url,100,iconimage,FANART,name)
     xbmc.executebuiltin('Container.SetViewMode(50)')
@@ -112,8 +112,8 @@ def addDir2(name,url,mode,iconimage,itemcount):
             simpleyear=splitName[2].partition(')')
         if len(simpleyear)>0:
             simpleyear=simpleyear[0]
-	    mg = eval(base64.b64decode('bWV0YWhhbmRsZXJzLk1ldGFEYXRhKHRtZGJfYXBpX2tleT0iMzZjMWM1OWYwNTI0YTYzZTc3MmI5MGMzNzc4ZmIwOTciKQ=='))
-	    meta = mg.get_meta('movie', name=simplename ,year=simpleyear)
+            mg = eval(base64.b64decode('bWV0YWhhbmRsZXJzLk1ldGFEYXRhKHRtZGJfYXBpX2tleT0iMzZjMWM1OWYwNTI0YTYzZTc3MmI5MGMzNzc4ZmIwOTciKQ=='))
+            meta = mg.get_meta('movie', name=simplename ,year=simpleyear)
         if meta['cover_url']=='':
             try:
                 meta['cover_url']=iconimage
@@ -164,8 +164,8 @@ def resolve(name,url,iconimage,description):
     host = ''
     try:
         OPEN = Open_Url(url)
-        match2 = re.compile('location=.+?embed(.+?)".+?;var',re.DOTALL).findall(OPEN)
-        match = re.compile('href="(.+?)"',re.DOTALL).findall(OPEN)
+        match2 = re.compile('<iframe src=(.+?) w',re.DOTALL).findall(OPEN)
+        match = re.compile('href=(.*?)>',re.DOTALL).findall(OPEN)
         for link in match:
             if not 'wholecloud' in link:
                 if not 'vidtodo' in link:
@@ -177,8 +177,6 @@ def resolve(name,url,iconimage,description):
                         hosts.append(host)
                         stream_url.append(link)
         for link in match2:
-            link2 = link.replace('\/','')
-            link = 'https://openload.co/embed/'+link2
             if not 'wholecloud' in link:
                 if not 'vidtodo' in link:
                     if  urlresolver.HostedMediaFile(link).valid_url():   
@@ -188,6 +186,13 @@ def resolve(name,url,iconimage,description):
                         host = '[B][COLOR white]%s[/COLOR][/B]' %label
                         hosts.append(host)
                         stream_url.append(link)
+        if len(match2) >1:
+                dialog = xbmcgui.Dialog()
+                ret = dialog.select('Please Select Host',hosts)
+                if ret == -1:
+                    return
+                elif ret > -1:
+                        url = stream_url[ret]
         if len(match) >1:
                 dialog = xbmcgui.Dialog()
                 ret = dialog.select('Please Select Host',hosts)
@@ -260,7 +265,7 @@ try:
 except:
         pass
         
-        
+
 print str(PATH)+': '+str(VERSION)
 print "Mode: "+str(mode)
 print "URL: "+str(url)
