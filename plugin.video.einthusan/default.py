@@ -461,7 +461,7 @@ def preferred_server(lnk, mainurl):
 		else:
 			SERVER_OFFSET.append(0)
 		servers.append(int(server_n) - SERVER_OFFSET[0])
-		vidpath = lnk.split('.tv/')[1]
+		vidpath = lnk.split('.com/')[1]
 		new_headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'Referer':mainurl, 'Origin':'https://einthusan.tv'}
 		for i in servers:
 			urltry = ("https://s" + str(i+SERVER_OFFSET[0]) + ".einthusan.com/" + vidpath)
