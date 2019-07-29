@@ -19,6 +19,7 @@ import requests
 # s = requests.Session()
 
 NUMBER_OF_PAGES = 3
+base_site = 'einthusan.com'
 
 ADDON = xbmcaddon.Addon(id='plugin.video.einthusan')
 username = ADDON.getSetting('username')
@@ -32,7 +33,7 @@ if (locationId > len(Locations) - 1):
     locationId = len(Locations) - 1
 
 location = Locations[locationId]
-BASE_URL='https://einthusan.com'
+BASE_URL='https://' + base_site
 ##
 # Prints the main categories. Called when id is 0.
 ##
@@ -97,7 +98,7 @@ def get_movies_and_music_videos_helper(name, url, language, mode, page):
     nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
     print("I was here")
     # Bit of a hack
-    MOVIES_URL = "http://www.einthusan.com/movies/watch/"
+    MOVIES_URL = "http://www.' + base_site + '/movies/watch/"
     for movie, lang, image, name, ishd, synopsis in match:
         if (mode == 1):
             if 'http' not in image:
@@ -172,11 +173,11 @@ def add_movies_to_list(movie_ids, bluray):
     ADDON_USERDATA_FOLDER = xbmc.translatePath(ADDON.getAddonInfo('profile'))
     DB_FILE = os.path.join(ADDON_USERDATA_FOLDER, 'movie_info_cache.db')
 
-    COVER_BASE_URL = 'http://www.einthusan.com/images/covers/'
+    COVER_BASE_URL = 'http://www.' + base_site + '/images/covers/'
     if (bluray):
-        BASE_URL = 'http://www.einthusan.com/movies/watch.php?bluray=true&id='
+        BASE_URL = 'http://www.' + base_site + '/movies/watch.php?bluray=true&id='
     else:
-        BASE_URL = 'http://www.einthusan.com/movies/watch.php?id='
+        BASE_URL = 'http://www.' + base_site + '/movies/watch.php?id='
     for m_id in movie_ids:
         movie_info = DBInterface.get_cached_movie_details(DB_FILE, m_id)
         if (movie_info == None):
@@ -195,14 +196,14 @@ def show_recent_sections(name, url, language, mode):
     cwd = ADDON.getAddonInfo('path')
     img_path = cwd + '/images/' 
 
-    postData = 'https://einthusan.com/movie/results/?'+url + '&find='
+    postData = 'https://' + base_site + '/movie/results/?'+url + '&find='
     addDir('Recently Posted',  postData + 'Recent', 1, img_path + 'recently_added.png')
     #addDir('[COLOR red]Recently Viewed[/COLOR]', postData + 'RecentlyViewed', 15, img_path + 'recently_viewed.png')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 
 # Shows the movie in the homepage..
 def show_featured_movies(name, url, language, mode):
-    page_url = 'https://einthusan.com/movie/browse/?lang=' + language
+    page_url = 'https://' + base_site + '/movie/browse/?lang=' + language
 
     html = requests.get(page_url).text
     matches = re.compile('name="newrelease_tab".+?img src="(.+?)".+?href="\/movie\/watch\/(.+?)\/\?lang=(.+?)"><h2>(.+?)<\/h2>.+?i class=(.+?)<\/div>').findall(html)
@@ -233,7 +234,7 @@ def show_featured_movies(name, url, language, mode):
         else:
             title=name
             movie = movie+',itsnothd,'+page_url
-        link = 'http://www.einthusan.com'+str(id)
+        link = 'http://www.' + base_site + "/" + str(id)
         
         image = img
         if 'http' not in image:
@@ -268,9 +269,9 @@ def show_A_Z(name, url, language, mode):
     
     azlist = map (chr, range(65,91))
     # postData = 'https://einthusan.tv/movie/results/?'+url + "find=Alphabets&alpha="
-    addDir('Numerical', 'https://einthusan.com/movie/results/?find=Numbers&'+url, 1, '')
+    addDir('Numerical', 'https://' + base_site + '/movie/results/?find=Numbers&'+url, 1, '')
     for letter in azlist:
-        addDir(letter, 'https://einthusan.com/movie/results/?alpha='+letter+'&find=Alphabets&'+url, 1, '')
+        addDir(letter, 'https://' + base_site + '/movie/results/?alpha='+letter+'&find=Alphabets&'+url, 1, '')
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
 ##
 # Single method that shows the list of years, actors and directors. 
@@ -307,8 +308,9 @@ def show_search_box(name, url, language, mode):
     keyb.doModal()
     if (keyb.isConfirmed()):
         search_term = urllib.quote_plus(keyb.getText()) 
-        postData = 'https://einthusan.com/movie/results/?'+url+'&query=' + search_term
-        headers={'Origin':'https://einthusan.com','Referer':'https://einthusan.com/movie/browse/?'+url,'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
+        postData = 'https://' + base_site + '/movie/results/?'+url+'&query=' + search_term
+        headers={'Origin':'https://' + base_site, 'Referer':'https://' + base_site + '/movie/browse/?'+url,
+		 'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
         html = requests.get(postData, headers=headers).text
         match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src="(.+?)".+?<h3>(.*?)<\/h3>.+?i class(.+?)<p').findall(html)
         nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
@@ -335,7 +337,7 @@ def show_search_box(name, url, language, mode):
 ##
 def list_music_videos(name, url, language, mode):
     if (url == "" or url == None):
-        url = 'http://www.einthusan.com/music/index.php?lang=' + language 
+        url = 'http://www.' + base_site + '/music/index.php?lang=' + language 
     get_movies_and_music_videos(name, url, language, mode)
 
 def http_request_with_login(url):
@@ -376,23 +378,26 @@ def play_video(name, url, language, mode):
         
         if ret ==0:
             # isithd = 'itshd'
-            headers={'Origin':'https://einthusan.com','Referer':'https://einthusan.com/movie/browse/?lang=hindi','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
-            mainurl='https://einthusan.com/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
-            mainurlajax='https://einthusan.com/ajax/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
+            headers={'Origin':'https://' + base_site, 'Referer':'https://' + base_site + '/movie/browse/?lang=hindi',
+		     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
+            mainurl='https://' + base_site + '/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
+            mainurlajax='https://' + base_site + '/ajax/movie/watch/%s/?lang=%s&uhd=true'%(url,lang)
             login_info(s, referurl)
             get_movie(s,mainurl,mainurlajax, headers)
         if ret ==1:
             # isithd = 'itsnothd'
-            mainurl='https://einthusan.com/movie/watch/%s/?lang=%s'%(url,lang)
-            mainurlajax='https://einthusan.com/ajax/movie/watch/%s/?lang=%s'%(url,lang)
+            mainurl='https://' + base_site + '/movie/watch/%s/?lang=%s'%(url,lang)
+            mainurlajax='https://' + base_site + '/ajax/movie/watch/%s/?lang=%s'%(url,lang)
             print(mainurlajax)
-            headers={'Origin':'https://einthusan.com','Referer':'https://einthusan.com/movie/browse/?lang=hindi','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
+            headers={'Origin':'https://' + base_site, 'Referer':'https://' + base_site + '/movie/browse/?lang=hindi',
+		     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
             get_movie(s,mainurl,mainurlajax, headers)
             
     else:
-        mainurl='https://einthusan.com/movie/watch/%s/?lang=%s'%(url,lang)
-        mainurlajax='https://einthusan.com/ajax/movie/watch/%s/?lang=%s'%(url,lang)
-        headers={'Origin':'https://einthusan.com','Referer':'https://einthusan.com/movie/browse/?lang=hindi','User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
+        mainurl='https://' + base_site + '/movie/watch/%s/?lang=%s'%(url,lang)
+        mainurlajax='https://' + base_site + '/ajax/movie/watch/%s/?lang=%s'%(url,lang)
+        headers={'Origin':'https://' + base_site, 'Referer':'https://' + base_site + '/movie/browse/?lang=hindi',
+		 'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'}
         get_movie(s,mainurl,mainurlajax, headers)
         
     xbmcplugin.endOfDirectory(int(sys.argv[1]))
@@ -427,7 +432,7 @@ def get_movie(s, mainurl, mainurlajax, headers=None):
 			
     xbmc.log(lnk, level=xbmc.LOGNOTICE)
       
-    urlnew=lnk+('|https://einthusan.com&Referer=%s&User-Agent=%s'%(mainurl,'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'))
+    urlnew=lnk+('|https://' + base_site + '&Referer=%s&User-Agent=%s'%(mainurl,'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36'))
     listitem = xbmcgui.ListItem( label = str(name), iconImage = "DefaultVideo.png", thumbnailImage = xbmc.getInfoImage( "ListItem.Thumb" ) )
     
     # listitem =xbmcgui.ListItem(name)
@@ -454,7 +459,7 @@ def preferred_server(lnk, mainurl):
 		else: # location == 'Sydney'
 			servers = [28,34,43]
 			
-		server_n = lnk.split('.einthusan.com')[0].strip('https://s')
+		server_n = lnk.split('.' + base_site)[0].strip('https://s')
 		SERVER_OFFSET = []
 		if int(server_n) > 100:
 			SERVER_OFFSET.append(100)
@@ -462,9 +467,10 @@ def preferred_server(lnk, mainurl):
 			SERVER_OFFSET.append(0)
 		servers.append(int(server_n) - SERVER_OFFSET[0])
 		vidpath = lnk.split('.com/')[1]
-		new_headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'Referer':mainurl, 'Origin':'https://einthusan.com'}
+		new_headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 
+			       'Referer':mainurl, 'Origin':'https://' + base_site}
 		for i in servers:
-			urltry = ("https://s" + str(i+SERVER_OFFSET[0]) + ".einthusan.com/" + vidpath)
+			urltry = ("https://s" + str(i+SERVER_OFFSET[0]) + "." + base_site + "/" + vidpath)
 			isitworking = requests.get(urltry, headers=new_headers).status_code
 			xbmc.log(urltry, level=xbmc.LOGNOTICE)
 			xbmc.log(str(isitworking), level=xbmc.LOGNOTICE)
@@ -474,26 +480,33 @@ def preferred_server(lnk, mainurl):
 	return lnk
 	
 def login_info(s, referurl):
-    
-    headers={'Host':'einthusan.com', 'Origin':'https://einthusan.com','Referer':referurl,'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
+    headers={'Host':base_site, 'Origin':'https://' + base_site,
+	     'Referer':referurl,
+	     'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.87 Safari/537.36'}
     
     htm = s.get('https://einthusan.com/login/?lang=hindi', headers=headers, allow_redirects=False).content
     csrf=re.findall('data-pageid=["\'](.*?)["\']',htm)[0]
     if '&#43;' in csrf: csrf = csrf.replace('&#43;', '+')
     
-    body = {'xEvent':'Login','xJson':'{"Email":"'+username+'","Password":"'+password+'"}', 'arcVersion':3, 'appVersion':59,'tabID':csrf+'48','gorilla.csrf.Token':csrf}
+    body = {'xEvent':'Login','xJson':'{"Email":"'+username+'","Password":"'+password+'"}', 
+	    'arcVersion':3, 'appVersion':59,'tabID':csrf+'48','gorilla.csrf.Token':csrf}
     xbmc.log(body)
     headers['X-Requested-With']='XMLHttpRequest'
     
     
     headers['Referer']='https://einthusan.com/login/?lang=hindi'
-    html2= s.post('https://einthusan.com/ajax/login/?lang=hindi',headers=headers,cookies=s.cookies, data=body,allow_redirects=False) 
+    html2= s.post('https://' + base_site + '/ajax/login/?lang=hindi',headers=headers,
+		  cookies=s.cookies, data=body,allow_redirects=False) 
     
-    html3=s.get('https://einthusan.com/account/?flashmessage=success%3A%3A%3AYou+are+now+logged+in.&lang=hindi', headers=headers, cookies=s.cookies)
+    html3=s.get('https://' + base_site + '/account/?flashmessage=success%3A%3A%3AYou+are+now+logged+in.&lang=hindi', 
+		headers=headers, cookies=s.cookies)
     
     csrf3 = re.findall('data-pageid=["\'](.*?)["\']',html3.text)[0]
-    body4 = {'xEvent':'notify','xJson':'{"Alert":"SUCCESS","Heading":"AWESOME!","Line1":"You+are+now+logged+in.","Buttons":[]}', 'arcVersion':3, 'appVersion':59,'tabID':csrf+'48','gorilla.csrf.Token':csrf3}
-    html4 = s.post('https://einthusan.com/ajax/account/?lang=hindi', headers=headers, cookies=s.cookies, data=body4)
+    body4 = {'xEvent':'notify',
+	     'xJson':'{"Alert":"SUCCESS","Heading":"AWESOME!","Line1":"You+are+now+logged+in.","Buttons":[]}', 
+	     'arcVersion':3, 'appVersion':59,'tabID':csrf+'48','gorilla.csrf.Token':csrf3}
+    html4 = s.post('https://' + base_site + '/ajax/account/?lang=hindi', headers=headers, 
+		   cookies=s.cookies, data=body4)
     
     return s
 ##
