@@ -234,7 +234,7 @@ def show_featured_movies(name, url, language, mode):
         else:
             title=name
             movie = movie+',itsnothd,'+page_url
-        link = 'http://www.' + base_site + "/" + str(id)
+        link = 'http://www.' + base_site + str(id)
         
         image = img
         if 'http' not in image:
