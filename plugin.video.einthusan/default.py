@@ -1,3 +1,4 @@
+
 # Einthusan.com plugin written by humla.
 # einthusan.ca Plugin maintained by ReasonsRepo
 
@@ -25,7 +26,7 @@ username = ADDON.getSetting('username')
 password = ADDON.getSetting('password')
 
 locationStr = xbmcplugin.getSetting(int(sys.argv[1]), 'location')
-Locations = ['San Francisco', 'Dallas', 'Washington D.C', 'Toronto', 'London', 'Sydney', 'No Preference']
+Locations = ['San Francisco', 'Dallas', 'Washington, D.C.', 'Toronto', 'London', 'Sydney', 'No Preference']
 
 locationId = int(locationStr)
 if (locationId > len(Locations) - 1):
@@ -33,6 +34,10 @@ if (locationId > len(Locations) - 1):
 
 location = Locations[locationId]
 BASE_URL='https://einthusan.ca'
+CDN_PREFIX = "cdn"
+CDN_ROOT = ".io"
+CDN_BASE_URL = "einthusan" + CDN_ROOT
+
 ##
 # Prints the main categories. Called when id is 0.
 ##
@@ -172,11 +177,11 @@ def add_movies_to_list(movie_ids, bluray):
     ADDON_USERDATA_FOLDER = xbmc.translatePath(ADDON.getAddonInfo('profile'))
     DB_FILE = os.path.join(ADDON_USERDATA_FOLDER, 'movie_info_cache.db')
 
-    COVER_BASE_URL = 'http://www.einthusan.com/images/covers/'
+    COVER_BASE_URL = 'http://www.einthusan.ca/images/covers/'
     if (bluray):
-        BASE_URL = 'http://www.einthusan.com/movies/watch.php?bluray=true&id='
+        BASE_URL = 'http://www.einthusan.ca/movies/watch.php?bluray=true&id='
     else:
-        BASE_URL = 'http://www.einthusan.com/movies/watch.php?id='
+        BASE_URL = 'http://www.einthusan.ca/movies/watch.php?id='
     for m_id in movie_ids:
         movie_info = DBInterface.get_cached_movie_details(DB_FILE, m_id)
         if (movie_info == None):
@@ -335,7 +340,7 @@ def show_search_box(name, url, language, mode):
 ##
 def list_music_videos(name, url, language, mode):
     if (url == "" or url == None):
-        url = 'http://www.einthusan.com/music/index.php?lang=' + language 
+        url = 'http://www.einthusan.ca/music/index.php?lang=' + language 
     get_movies_and_music_videos(name, url, language, mode)
 
 def http_request_with_login(url):
@@ -443,7 +448,7 @@ def preferred_server(lnk, mainurl):
 	if location != 'No Preference':
 		if location == 'Dallas':
 			servers = [23,24,25,29,30,31,35,36,37,38,45]
-		elif location == 'Washington D.C':
+		elif location == 'Washington, D.C.':
 			servers = [1,2,3,4,5,6,7,8,9,10,11,13,41,44]
 		elif location == 'San Francisco':
 			servers = [19,20,21,22,46]
@@ -453,18 +458,20 @@ def preferred_server(lnk, mainurl):
 			servers = [14,15,16,17,18,32,33,39,40,42]
 		else: # location == 'Sydney'
 			servers = [28,34,43]
-			
-		server_n = lnk.split('.einthusan.ca')[0].strip('https://s')
+		server_n = lnk.split('.' + CDN_BASE_URL)[0].strip('https://' + CDN_PREFIX)
+		xbmc.log(server_n)
 		SERVER_OFFSET = []
 		if int(server_n) > 100:
 			SERVER_OFFSET.append(100)
 		else:
 			SERVER_OFFSET.append(0)
 		servers.append(int(server_n) - SERVER_OFFSET[0])
-		vidpath = lnk.split('.tv/')[1]
+		vidpath = lnk.split(CDN_ROOT + '/')[1]
+		xbmc.log(vidpath)
 		new_headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'Referer':mainurl, 'Origin':'https://einthusan.ca'}
 		for i in servers:
-			urltry = ("https://s" + str(i+SERVER_OFFSET[0]) + ".einthusan.ca/" + vidpath)
+			urltry = ("https://" + CDN_PREFIX + str(i+SERVER_OFFSET[0]) + ".einthusan.ca/" + vidpath)
+
 			isitworking = requests.get(urltry, headers=new_headers).status_code
 			xbmc.log(urltry, level=xbmc.LOGNOTICE)
 			xbmc.log(str(isitworking), level=xbmc.LOGNOTICE)
