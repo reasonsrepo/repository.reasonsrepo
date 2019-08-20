@@ -86,8 +86,10 @@ def Get_content(url):
     for item in items:
         items = len(item)
         name1 = item.h2.text
+        name = item.h2.text
         if 'Hindi' in name1:
-                name2 = re.compile('(.+?)Hindi.+',re.DOTALL).findall(name1)
+                name2 = re.compile('(.+?)Hindi',re.DOTALL).findall(name1)
+                name = name2[0]
                 # for name in name2:
                 #     name = name
                 try:
@@ -101,13 +103,16 @@ def Get_content(url):
             name2 = re.compile('(.+?)Full.+',re.DOTALL).findall(name1)
         #     for name in name2:
         #         name = name
+        
             try:
                 name2 = ''.join(map(str, name2))
                 name = name2.replace("\u2019s","s")
                 
             except:
-                name3 = name2
-                name = name3
+                name = name2
+        if type(name) is list:
+                name2 = ''.join(map(str, name[0].encode('utf8')))
+                name = name2.replace("\u2019s","s") 
         url1 = item.h2.find('a')['href'].strip()
         url = url1
         try:
@@ -235,15 +240,20 @@ def PT(url):
 def resolve(name,url,iconimage,description):
     hosts = []
     stream_url = []
+    matches = []
     host = ''
     try:
         OPEN = Open_Url(url).lower()
         match = re.compile('<iframe src=(.+?) scrolling=n',re.DOTALL).findall(OPEN)
         match2 = re.compile('<iframe src="(.+?)"',re.DOTALL).findall(OPEN)
         match3 = re.compile('<iframe width=.*?src=(.+?) frameborder',re.DOTALL).findall(OPEN)
-
         for link in match:
-            xbmc.log(link)
+            matches.append(link)
+        for link in match2:
+                matches.append(link)
+        for link in match3:
+                matches.append(link)
+        for link in matches:
             if  urlresolver.HostedMediaFile(link).valid_url():   
                 label = link.split('//')[1].replace('www.','')
                 label = label.split('/')[0].split('.')[0].title()
@@ -251,39 +261,7 @@ def resolve(name,url,iconimage,description):
                 host = '[B][COLOR white]%s[/COLOR][/B]' %label
                 hosts.append(host)
                 stream_url.append(link)
-        for link in match2:
-                xbmc.log(link)
-                if  urlresolver.HostedMediaFile(link).valid_url():   
-                    label = link.split('//')[1].replace('www.','')
-                    label = label.split('/')[0].split('.')[0].title()
-                    label = label.replace('Tvad','TheVideo')
-                    host = '[B][COLOR white]%s[/COLOR][/B]' %label
-                    hosts.append(host)
-                    stream_url.append(link)
-        for link in match3:
-                xbmc.log(link)
-                if  urlresolver.HostedMediaFile(link).valid_url():   
-                    label = link.split('//')[1].replace('www.','')
-                    label = label.split('/')[0].split('.')[0].title()
-                    label = label.replace('Tvad','TheVideo')
-                    host = '[B][COLOR white]%s[/COLOR][/B]' %label
-                    hosts.append(host)
-                    stream_url.append(link)
-        if len(match) >1:
-                dialog = xbmcgui.Dialog()
-                ret = dialog.select('Please Select Host',hosts)
-                if ret == -1:
-                    return
-                elif ret > -1:
-                        url = stream_url[ret]
-        elif len(match2) > 1:
-                dialog = xbmcgui.Dialog()
-                ret = dialog.select('Please Select Host',hosts)
-                if ret == -1:
-                    return
-                elif ret > -1:
-                        url = stream_url[ret]
-        elif len(match3) > 1:
+        if len(matches) >1:
                 dialog = xbmcgui.Dialog()
                 ret = dialog.select('Please Select Host',hosts)
                 if ret == -1:
@@ -356,12 +334,14 @@ try:
 except:
         pass
         
-        
-print str(PATH)+': '+str(VERSION)
-print "Mode: "+str(mode)
-print "URL: "+str(url)
-print "Name: "+str(name)
-print "IconImage: "+str(iconimage)
+#########################################################
+                # Just Printing stuff #
+#########################################################
+print(str(PATH)+': '+str(VERSION))
+print("Mode: "+str(mode))
+print("URL: "+str(url))
+print("Name: "+str(name))
+print("IconImage: "+str(iconimage))
 #########################################################
 	
 if mode == None: Main_menu()
