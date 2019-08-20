@@ -38,4 +38,4 @@ Visit our website to find the latest changelog and the list of available addons
 <li>17. Click on <strong>Video Add-ons</strong></li>
 <li>19. Now you can install whichever addon you want to</li>
 <br><br>
-You can also follow these steps to install Reasons Repository on Fire Tv/Android Tv Box
+You can also follow these steps to install Reasons Repository on Fire Tv/Android TV/Android TV Box
