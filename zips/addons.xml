@@ -94,7 +94,7 @@ DeccanDelight and its developers [B]DO NOT[/B] host, create, or distribute any o
 
 <addon id="plugin.video.einthusan"
        name="Einthusan"
-       version="1.4.5"
+       version="1.4.6"
        provider-name="humla,ReasonsRepo">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
