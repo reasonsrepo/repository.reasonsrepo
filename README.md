@@ -12,7 +12,10 @@ Email in plain text format
 reasonsrepo@gmail.com
 
 Visit our website to find the latest changelog and the list of available addons
-http://reasonsrepo.ml/
+```diff
++ http://reasonsrepo.ml/
+- No longer works
+```
 
 # How to install Reasons Repository in Kodi?
 <b>Follow these steps below</b>
