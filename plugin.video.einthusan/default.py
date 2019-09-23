@@ -212,7 +212,7 @@ def show_featured_movies(name, url, language, mode):
     html = requests.get(page_url).text
     matches = re.compile('name="newrelease_tab".+?img src="(.+?)".+?href="\/movie\/watch\/(.+?)\/\?lang=(.+?)"><h2>(.+?)<\/h2>.+?i class=(.+?)<\/div>').findall(html)
 
-    staffPicks_matches = re.compile('<a class="title" href="\/movie\/watch\/(.+?)\/\?lang=.+?"><h3>(.+?)<\/h3><\/a><div class="info">.+?<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><p class="synopsis">(.+?)<\/p><div class="professionals">  <input type=.+?<img src="(.+?)"><\/div>').findall(html)
+    staffPicks_matches = re.compile('<a class="title" href="\/movie\/watch\/(.+?)\/\?lang=.+?"><h3>(.+?)<\/h3><\/a><div class="info">.+?<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><p class=".*?synopsis">(.+?)<\/p><div class="professionals">  <input type=.+?<img src="(.+?)"><\/div>').findall(html)
     staffPicks_matches = staffPicks_matches[:10]
     print("it works")
     allmatches = []
