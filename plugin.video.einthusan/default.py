@@ -98,7 +98,7 @@ def get_movies_and_music_videos_helper(name, url, language, mode, page):
     referurl = url
     html =  requests.get(url).text
     # match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src="(.*?)".*?<h3>(.*?)</h3>.+?i class(.+?)<p').findall(html)
-    match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?<img src="(.+?)".+?<h3>(.+?)<\/h3>.+?i class(.+?)<p class="synopsis">(.+?)<\/p>.+?<span>Wiki<').findall(html)
+    match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?<img src="(.+?)".+?<h3>(.+?)<\/h3>.+?i class(.+?)<p class=".*?synopsis">(.+?)<\/p>.+?<span>Wiki<').findall(html)
     nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
     print("I was here")
     # Bit of a hack
