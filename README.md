@@ -25,7 +25,7 @@ Visit our website to find the latest changelog and the list of available addons
 <li>4. When the warning box pops up, click <strong>‘Yes’</strong>.</li>
 <li>5. Now go back to the Kodi homescreen, and click on the ‘Settings’ icon.</li>
 <li>6. From here, go to<em> File Manager -&gt; Add Source.</em></li>
-<li>7. Select None and then enter the following path without the quotes <strong>“http://reasonsrepo.ml/repo/”</strong>.</li>
+<li>7. Select None and then enter the following path without the quotes <strong>“http://reasonsrepos.000webhostapp.com/repo/”</strong>.</li>
 <li>8. Name it ‘<strong>ReasonsRepo</strong>’ and click ‘OK’.</li>
 <li>9. From the Kodi homescreen, select Addons.</li>
 <li>10. Click on the <strong>Package Installer Icon</strong> at the top left corner.</li>
