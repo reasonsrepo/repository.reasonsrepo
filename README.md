@@ -15,6 +15,8 @@ Visit our website to find the latest changelog and the list of available addons
 ```diff
 + http://reasonsrepo.ml/
 - No longer works
+
++ Try this new repo http://reasonsrepos.000webhostapp.com/repo/
 ```
 
 # How to install Reasons Repository in Kodi?
