@@ -98,7 +98,7 @@ def get_movies_and_music_videos_helper(name, url, language, mode, page):
     referurl = url
     html =  requests.get(url).text
     # match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?src="(.*?)".*?<h3>(.*?)</h3>.+?i class(.+?)<p').findall(html)
-    match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?<img src="(.+?)".+?<h3>(.+?)<\/h3>.+?i class(.+?)<p class="synopsis">(.+?)<\/p>.+?<span>Wiki<').findall(html)
+    match = re.compile('<div class="block1">.*?href=".*?watch\/(.*?)\/\?lang=(.*?)".*?<img src="(.+?)".+?<h3>(.+?)<\/h3>.+?i class(.+?)<p class=".*?synopsis">(.+?)<\/p>.+?<span>Wiki<').findall(html)
     nextpage=re.findall('data-disabled="([^"]*)" href="(.+?)"', html)[-1]
     print("I was here")
     # Bit of a hack
@@ -212,7 +212,7 @@ def show_featured_movies(name, url, language, mode):
     html = requests.get(page_url).text
     matches = re.compile('name="newrelease_tab".+?img src="(.+?)".+?href="\/movie\/watch\/(.+?)\/\?lang=(.+?)"><h2>(.+?)<\/h2>.+?i class=(.+?)<\/div>').findall(html)
 
-    staffPicks_matches = re.compile('<a class="title" href="\/movie\/watch\/(.+?)\/\?lang=.+?"><h3>(.+?)<\/h3><\/a><div class="info">.+?<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><p class="synopsis">(.+?)<\/p><div class="professionals">  <input type=.+?<img src="(.+?)"><\/div>').findall(html)
+    staffPicks_matches = re.compile('<a class="title" href="\/movie\/watch\/(.+?)\/\?lang=.+?"><h3>(.+?)<\/h3><\/a><div class="info">.+?<i class="(.+?)">.+?<\/i>.+?<\/i>Subtitle<\/p><\/div><p class=".*?synopsis">(.+?)<\/p><div class="professionals">  <input type=.+?<img src="(.+?)"><\/div>').findall(html)
     staffPicks_matches = staffPicks_matches[:10]
     print("it works")
     allmatches = []
@@ -470,7 +470,7 @@ def preferred_server(lnk, mainurl):
 		xbmc.log(vidpath)
 		new_headers = {'User-Agent':'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/55.0.2883.87 Safari/537.36', 'Referer':mainurl, 'Origin':'https://einthusan.ca'}
 		for i in servers:
-			urltry = ("https://" + CDN_PREFIX + str(i+SERVER_OFFSET[0]) + ".einthusan.ca/" + vidpath)
+			urltry = ("https://" + CDN_PREFIX + str(i+SERVER_OFFSET[0]) + ".einthusan.io/" + vidpath)
 
 			isitworking = requests.get(urltry, headers=new_headers).status_code
 			xbmc.log(urltry, level=xbmc.LOGNOTICE)
