@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <addon id="plugin.video.einthusan"
        name="Einthusan"
-       version="1.4.7"
+       version="1.5.0"
        provider-name="humla,ReasonsRepo">
     <requires>
         <import addon="xbmc.python" version="2.1.0"/>
@@ -15,6 +15,7 @@
     <extension point="xbmc.addon.metadata">
         <platform>all</platform>
         <summary>Watch Hindi, Tamil  movies</summary>
+        <news>[B]Version 1.5.0 - 23 February 2020[/B] - [COLOR yellow] Python 3 Upgrade, Bug Fixes and Improvements[/COLOR]</news>
         <news>[B]Version 1.4.7 - 19 August 2019[/B] - [COLOR yellow] Changed domain from .tv to .ca[/COLOR]</news>
         <news>[B]Version 1.4.7 - 19 August 2019[/B] - [COLOR yellow] Updated CDN as per suggestions from github user "DaGrat3One"[/COLOR]</news>
         <description>
