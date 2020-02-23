@@ -16,8 +16,8 @@ def get_movie_detail(movie_id):
 	try:
 		response_json = json.loads(html)
 	except ValueError:
-		print "Value Error: Error when decoding JSON"
-		print html
+		print("Value Error: Error when decoding JSON")
+		print(html)
 	return response_json['movie_id'], response_json['movie'], response_json['cover']
 ##
 # Returns a list of movie id for a specific filters
@@ -30,8 +30,8 @@ def apply_filter(filters):
 	try:
 		response_json = json.loads(result)
 	except ValueError:
-		print "Value Error: Error when decoding JSON"
-		print result
+		print("Value Error: Error when decoding JSON")
+		print(result)
 	return  response_json
 
 def get_options(attr, language):
@@ -41,14 +41,14 @@ def get_options(attr, language):
 	html = HTTPInterface.http_post(API_URL, data=data)
 	result = {}
 	try:
-		print result
+		print(result)
 		result = json.loads(html)
 		return result['organize'][attr]['filtered']
 	except KeyError:
-		print "Key Error "  
+		print("Key Error")
 	except ValueError:
-		print "Value Error: Error when decoding JSON"
-		print html
+		print("Value Error: Error when decoding JSON")
+		print(html)
 	return {}
 	
 ##

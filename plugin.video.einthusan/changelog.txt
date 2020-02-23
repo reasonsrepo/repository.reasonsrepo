@@ -1,3 +1,6 @@
+[B]Version 1.5.0[/B]
+- python3 bug fixes and improvements
+
 [B]Version 1.4.3[/B]
 - Reasons Repository took over
 

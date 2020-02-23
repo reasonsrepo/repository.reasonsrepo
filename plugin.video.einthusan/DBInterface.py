@@ -17,7 +17,7 @@ def get_cached_movie_details(cache_db_file, id):
 		if (len (cached_results) > 0):
 			return cached_results[0]
 	except :
-		print "Exception while getting cached movie detail"
+		print("Exception while getting cached movie detail")
 		return None
 
 
@@ -31,6 +31,6 @@ def save_move_details_to_cache(cache_db_file, id, name, picture):
 		cursor.execute('INSERT INTO movie_detail_cache VALUES ("'+str(id)+'","'+str(name)+'","'+str(picture)+ '")')
 		conn.commit()
 	except:
-		print "Exception while saving movie detail to cache"
+		print("Exception while saving movie detail to cache")
 		return None
 		
